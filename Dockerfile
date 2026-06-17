@@ -35,7 +35,9 @@ server {
   root /usr/share/nginx/html;
   index index.html;
 
-  # Markdown content type (set MIME type via mime.types)
+  # Include the default MIME types (js, css, html, etc.) and add markdown
+  include /etc/nginx/mime.types;
+  default_type application/octet-stream;
   types {
     text/markdown md markdown;
   }
@@ -56,6 +58,10 @@ server {
   gzip on;
   gzip_types text/plain text/css application/json application/javascript text/xml application/xml image/svg+xml text/markdown;
   gzip_min_length 256;
+
+  # Security headers
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 }
 EOF
 
