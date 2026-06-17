@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { api } from "@/services/api/client";
+import { apiGet, isDemoMode } from "@/services/api/client";
 import { decryptMessage } from "@/services/crypto/decrypt";
 import { useAppSelector } from "@/hooks/redux";
 import type { Message } from "@ui/shared-types";
@@ -21,12 +21,32 @@ export function MessageView({ mailboxId, messageId }: Props) {
     let cancelled = false;
     (async () => {
       try {
-        const data = await api.get(`mailboxes/${mailboxId}/messages/${messageId}`).json<Message>();
+        const data = await apiGet<Message>(`mailboxes/${mailboxId}/messages/${messageId}`);
         if (cancelled) return;
         setMsg(data);
         if (keypair && data.ciphertext) {
           const decrypted = await decryptMessage(data.ciphertext, keypair);
           if (!cancelled) setBody(decrypted);
+        } else if (isDemoMode() && data) {
+          // Demo: render a synthesized body from preview + subject
+          if (!cancelled) {
+            const lines = [
+              `Hi Alip,`,
+              ``,
+              data.preview,
+              ``,
+              `— ${data.fromName ?? data.from}`,
+              ``,
+              `[Demo body — in production this would be decrypted client-side ` +
+                `from the ciphertext using your Ed25519/secret key stored in IndexedDB. ` +
+                `Decryption never happens on the server.]`,
+            ];
+            setBody(
+              lines
+                .map((l) => (l === "" ? "<br/>" : `<p>${escapeHtml(l)}</p>`))
+                .join("\n")
+            );
+          }
         }
       } catch (err) {
         if (!cancelled) console.error("Failed to load message", err);
@@ -63,4 +83,13 @@ export function MessageView({ mailboxId, messageId }: Props) {
       <div className={styles.body} dangerouslySetInnerHTML={{ __html: body ?? msg.preview ?? "" }} />
     </article>
   );
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
