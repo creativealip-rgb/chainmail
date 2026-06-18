@@ -9,6 +9,8 @@ import { cors } from "hono/cors";
 import { health } from "./routes/health.js";
 import { auth } from "./routes/auth.js";
 import { aliases } from "./routes/aliases.js";
+import { ingestRoute } from "./routes/ingest.js";
+import { messagesRoute } from "./routes/messages.js";
 import { errorHandler } from "./middleware/error.js";
 import type { ChainmailVars } from "./middleware/auth.js";
 
@@ -28,6 +30,8 @@ app.onError(errorHandler);
 app.route("/api/health", health);
 app.route("/api/auth", auth);
 app.route("/api/aliases", aliases);
+app.route("/api/ingest", ingestRoute);
+app.route("/api/messages", messagesRoute);
 
 app.get("/", (c) => c.text("chainmail-api · see /api/health"));
 

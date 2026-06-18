@@ -1,0 +1,22 @@
+{
+  "name": "parsers",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Chainmail parsers — private, NOT open-source. Parses CEX/DEX/NFT/explorer emails into structured Receipts.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

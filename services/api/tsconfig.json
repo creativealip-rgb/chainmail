@@ -10,8 +10,9 @@
     "noEmit": false,
     "declaration": false,
     "jsx": "preserve",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "noUncheckedIndexedAccess": false
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "drizzle"]
+  "exclude": ["node_modules", "dist", "drizzle", "../parsers"]
 }

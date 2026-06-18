@@ -8,14 +8,19 @@ RUN corepack enable && corepack prepare pnpm@11.5.2 --activate
 # Manifests
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* tsconfig.base.json ./
 COPY services/api/package.json ./services/api/
+COPY services/parsers/package.json ./services/parsers/
+COPY services/parsers/tsconfig.json ./services/parsers/
 
 # Install all deps (build needs devDeps for tsc + tsx for migrate)
 RUN pnpm install --filter api... --frozen-lockfile=false
 
 # Source
 COPY services/api/ ./services/api/
+COPY services/parsers/ ./services/parsers/
 
-# Compile TS → dist/
+# Compile parsers first (api depends on it)
+RUN pnpm --filter parsers build
+# Compile API
 RUN pnpm --filter api build
 
 # Stage 2: runtime — copy node_modules + dist from builder (deterministic, no re-install)
@@ -28,6 +33,9 @@ ENV PORT=3000
 # Copy compiled output + drizzle migration SQL
 COPY --from=builder /app/services/api/dist/ ./dist/
 COPY --from=builder /app/services/api/drizzle/ ./dist/drizzle/
+# Parsers package: package.json (with main/exports) + dist/ (compiled JS + .d.ts)
+COPY --from=builder /app/services/parsers/package.json ./node_modules/parsers/package.json
+COPY --from=builder /app/services/parsers/dist/ ./node_modules/parsers/dist/
 
 # Copy workspace root node_modules (real packages live in .pnpm/)
 COPY --from=builder /app/node_modules/ ./node_modules/
