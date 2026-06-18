@@ -331,7 +331,7 @@ Goal: prove ingestion works end-to-end. 1 user (Alip) can forward crypto emails 
 | **W1** | Rebrand | New logo SVG, palette swap, copy rewrite, deploy to new domain | Jun 19–20 | ✅ done |
 | **W2** | Backend skeleton | Hono + Drizzle + Postgres schema + auth + alias gen | Jun 21–24 | ✅ done |
 | **W3** | Ingestion | Haraka SMTP + `/api/ingest` + raw MIME → messages table | Jun 25–28 | ✅ done |
-| **W4** | Parsers M1 | 3 parsers (Coinbase, Binance, Etherscan) + tests | Jun 29 – Jul 2 | ⬜ |
+| **W4** | Parsers M1 | 3 parsers (Coinbase, Binance, Etherscan) + tests | Jun 29 – Jul 2 | ✅ done |
 | **W5** | WebSocket + sync | Socket push to frontend, replace demo mode | Jul 3–5 | ⬜ |
 | **W6** | M1 launch | Alip forward 1 real Coinbase email → see parsed in UI | Jul 6–8 | ⬜ |
 | **W7–W9** | Phase 2 (tax) | Rollup + CSV + 10 parsers | Jul 9 – Aug 1 | ⬜ |
