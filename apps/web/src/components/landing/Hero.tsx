@@ -8,19 +8,19 @@ export function Hero() {
     <section className={styles.hero}>
       <div className={styles.badge}>
         <span className={styles.dot} />
-        <span>Early access · WIP</span>
+        <span>Early access</span>
       </div>
 
       <h1 className={styles.title}>
-        Your on-chain receipts.
+        Your crypto receipts.
         <br />
-        <span className={styles.gradient}>Encrypted. Tax-ready.</span>
+        <span className={styles.gradient}>Parsed, encrypted, tax-ready.</span>
       </h1>
 
       <p className={styles.subtitle}>
-        Forward emails from Coinbase, Binance, OpenSea — Chainmail auto-parses
-        CEX, DEX, and NFT receipts into a searchable, encrypted archive.
-        Koinly-compatible CSV at tax season. Gmail stays primary.
+        Forward emails from Coinbase, Binance, OpenSea, Etherscan. Chainmail
+        turns them into a searchable archive and a Koinly-compatible CSV.
+        Gmail stays primary.
       </p>
 
       <div className={styles.cta}>
@@ -58,26 +58,26 @@ export function Hero() {
             </div>
             <div className={styles.miniList}>
               <div className={styles.miniRow} data-unread="true">
-                <span className={styles.miniAvatar} style={{ background: "linear-gradient(135deg,#C091FF,#8A8FFB)" }}>S</span>
+                <span className={styles.miniAvatar} style={{ background: "linear-gradient(135deg,#0CE884,#067DF7)" }}>C</span>
                 <div>
-                  <div className={styles.miniSender}>Chainmail Security</div>
-                  <div className={styles.miniSubject}>Did you log in from a new device?</div>
+                  <div className={styles.miniSender}>Coinbase</div>
+                  <div className={styles.miniSubject}>Bought 0.5 BTC · $32,145.00</div>
                 </div>
                 <div className={styles.miniTime}>16:01</div>
               </div>
               <div className={styles.miniRow}>
-                <span className={styles.miniAvatar} style={{ background: "linear-gradient(135deg,#7DCFFF,#067DF7)" }}>C</span>
+                <span className={styles.miniAvatar} style={{ background: "linear-gradient(135deg,#FBBC04,#FB8C00)" }}>B</span>
                 <div>
-                  <div className={styles.miniSender}>Chainmail Community</div>
-                  <div className={styles.miniSubject}>Join Chainmail Community on Discord! 💬</div>
+                  <div className={styles.miniSender}>Binance</div>
+                  <div className={styles.miniSubject}>Deposit 1,000 USDT received</div>
                 </div>
                 <div className={styles.miniTime}>11.04</div>
               </div>
               <div className={styles.miniRow}>
-                <span className={styles.miniAvatar} style={{ background: "linear-gradient(135deg,#FF98F0,#C091FF)" }}>P</span>
+                <span className={styles.miniAvatar} style={{ background: "linear-gradient(135deg,#7DCFFF,#6648FF)" }}>E</span>
                 <div>
-                  <div className={styles.miniSender}>Chainmail Product</div>
-                  <div className={styles.miniSubject}>Welcome to Chainmail! 🚀</div>
+                  <div className={styles.miniSender}>Etherscan</div>
+                  <div className={styles.miniSubject}>Tx 0x7a3f...d92e · Confirmed</div>
                 </div>
                 <div className={styles.miniTime}>11.04</div>
               </div>

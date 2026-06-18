@@ -2,27 +2,23 @@ import styles from "./Features.module.css";
 
 const FEATURES = [
   {
-    icon: "📨",
-    title: "Gmail forward, 30s setup",
-    body: "Get a unique alias. Set a Gmail filter: 'from coinbase.com → forward to alias'. No email migration, no DNS.",
+    title: "Forward, no migration",
+    body: "Get a unique alias. Add one Gmail filter. New crypto emails flow into Chainmail. Your primary inbox stays untouched.",
     status: "shipped",
   },
   {
-    icon: "🔗",
-    title: "Auto-parse on-chain receipts",
-    body: "CEX trades, DEX swaps, NFT mints, airdrops, allowance changes — decoded into structured JSON. Coinbase + Binance + Etherscan at launch.",
+    title: "Parse CEX, DEX, NFT, explorer",
+    body: "Coinbase, Binance, Etherscan at launch. Uniswap, OpenSea, Phantom, Indodax next. Each parser tested against 50+ real emails.",
     status: "wip",
   },
   {
-    icon: "📊",
-    title: "Tax-ready CSV, 1 click",
-    body: "Per-year, per-exchange, per-chain rollup. Koinly & CoinTracker-compatible. Stop pasting CSVs from 5 exchanges by hand.",
+    title: "CSV export, tax season ready",
+    body: "Per-year, per-exchange, per-chain rollup. Koinly and CoinTracker import format. Stop pasting CSVs from five exchanges by hand.",
     status: "wip",
   },
   {
-    icon: "🔒",
-    title: "Zero-access encrypted",
-    body: "AES-GCM-256 + Ed25519. Ciphertext on our servers only. Your passphrase never leaves the device — we can't read your mail.",
+    title: "Encrypted, server can't read",
+    body: "AES-GCM-256 + Ed25519. Your passphrase never leaves the device. We store ciphertext, not plaintext.",
     status: "shipped",
   },
 ];
@@ -36,18 +32,15 @@ export function Features() {
   return (
     <section id="features">
       <header className={styles.header}>
-        <h2>What makes Chainmail different</h2>
-        <p>
-          Generic email clients ignore crypto. Crypto tax tools ignore email.
-          Chainmail is the second inbox for the receipts in between.
-        </p>
+        <h2>What Chainmail does</h2>
+        <p>Four jobs a normal email client will not do for you.</p>
       </header>
 
       <div className={styles.grid}>
-        {FEATURES.map((f) => (
+        {FEATURES.map((f, i) => (
           <div key={f.title} className={styles.card}>
-            <div className={styles.icon} aria-hidden>{f.icon}</div>
             <div className={styles.cardHeader}>
+              <span className={styles.numeral} aria-hidden>{String(i + 1).padStart(2, "0")}</span>
               <h3 className={styles.title}>{f.title}</h3>
               <span
                 className={styles.badge}

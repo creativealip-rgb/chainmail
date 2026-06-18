@@ -31,10 +31,10 @@ export function TechStack() {
   return (
     <section id="stack">
       <header className={styles.header}>
-        <h2>The stack</h2>
+        <h2>Built with</h2>
         <p>
-          Modern, lean, open-source. Same primitives you'd pick for a
-          production encrypted email client — minus the vendor lock-in.
+          Same primitives you would pick for a production encrypted email
+          client, minus the vendor lock-in.
         </p>
       </header>
 
