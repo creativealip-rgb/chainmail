@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import type { ApiMessageDetail, ApiReceipt } from "@/store/slices/messagesSlice";
 import { decryptMessageBody, getUnlockedKey, type KeyPair } from "@/services/crypto/vault";
+import { LabelPicker } from "./LabelPicker";
 import styles from "./MessageView.module.css";
 
 interface Props {
@@ -199,6 +200,7 @@ export function MessageView({ messageId }: Props) {
         <button className={styles.iconBtn} title="Move to Trash">🗑</button>
         <button className={styles.iconBtn} title="Mark as Junk">🚩</button>
         <button className={styles.iconBtn} title="Star">☆</button>
+        <LabelPicker messageId={msg.id} />
         <span className={styles.spacer} />
         <button className={styles.iconBtn} title="Export as CSV">📊 Export CSV</button>
       </nav>

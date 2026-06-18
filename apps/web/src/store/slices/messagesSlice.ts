@@ -165,19 +165,26 @@ export const markAllRead = createAsyncThunk<
 
 /** Set labels on a message (replaces existing assignments) */
 export const setMessageLabels = createAsyncThunk<
-  { id: string; labelIds: string[] },
+  { id: string; labels: ApiMessageLabel[] },
   { id: string; labelIds: string[] },
   { rejectValue: string }
 >("messages/setLabels", async ({ id, labelIds }, { rejectWithValue }) => {
   const token = getToken();
   if (!token) return rejectWithValue("not authenticated");
+  // Apply assignment first
   const res = await fetch(import.meta.env.VITE_API_URL + `/api/messages/${id}/labels`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "content-type": "application/json" },
     body: JSON.stringify({ labelIds }),
   });
   if (!res.ok) return rejectWithValue(`set labels failed (${res.status})`);
-  return { id, labelIds };
+  // Re-fetch the resolved label list so the UI can show the correct names + colors
+  const detail = await fetch(import.meta.env.VITE_API_URL + `/api/messages/${id}/labels`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!detail.ok) return rejectWithValue(`get labels failed (${detail.status})`);
+  const data = (await detail.json()) as { labels: ApiMessageLabel[] };
+  return { id, labels: data.labels };
 });
 
 const messagesSlice = createSlice({
@@ -232,9 +239,7 @@ const messagesSlice = createSlice({
         });
       })
       .addCase(setMessageLabels.fulfilled, (s, a) => {
-        // We don't have the label details here; clear and let MessageView re-fetch
-        // Or — caller should pass back the resolved label objects. For now, drop.
-        s.labelsByMessage[a.payload.id] = [];
+        s.labelsByMessage[a.payload.id] = a.payload.labels;
       });
   },
 });
