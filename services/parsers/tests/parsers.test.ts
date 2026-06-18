@@ -74,6 +74,21 @@ test("coinbase: deposit USDC parsed", () => {
   assert.equal(r.data.asset, "USDC");
 });
 
+test("coinbase: 'received X BTC' pattern + txHash extracted", () => {
+  const fx = fixtures.find((f) => f.label === "coinbase-deposit-received");
+  assert.ok(fx, "fixture missing");
+  const r = coinbaseParser({ ...fx, receivedAt: new Date() });
+  assert.ok(r, "parser should match 'received X BTC'");
+  assert.equal(r.parserKey, "coinbase");
+  assert.equal(r.kind, "cex_deposit");
+  assert.equal(r.data.asset, "BTC");
+  assert.equal(r.data.amount, "0.5");
+  assert.equal(r.data.txHash, "0xdeadbeef1234567890abcdef1234567890abcdef");
+  assert.equal(r.data.counterparty, "coinbase");
+  assert.equal(r.data.chain, "cex");
+  assert.ok(r.confidence >= 0.9);
+});
+
 test("coinbase: misformatted email → kind=unknown but parserKey set", () => {
   const fx = fixtures.find((f) => f.label === "coinbase-misformatted");
   const r = coinbaseParser({ ...fx, receivedAt: new Date() });
@@ -90,6 +105,15 @@ test("binance: deposit USDT parsed", () => {
   assert.equal(r.kind, "cex_deposit");
   assert.equal(r.data.asset, "USDT");
   assert.ok(r.confidence >= 0.9, `confidence too low: ${r.confidence}`);
+});
+
+test("binance: deposit with TX hash extracted", () => {
+  const fx = fixtures.find((f) => f.label === "binance-deposit-with-tx");
+  const r = binanceParser({ ...fx, receivedAt: new Date() });
+  assert.ok(r);
+  assert.equal(r.data.txHash, "0xfeedbeef1234567890abcdef1234567890abcdef");
+  assert.equal(r.data.chain, "cex");
+  assert.equal(r.data.counterparty, "binance");
 });
 
 test("binance: withdrawal BTC parsed", () => {
@@ -162,6 +186,24 @@ test("parseEmail: indodax buy BTC", () => {
   assert.equal(r.kind, "cex_trade");
   assert.equal(r.data.asset, "BTC");
   assert.equal(r.data.side, "buy");
+});
+
+test("parseEmail: indodax Jumlah/Total Bayar pattern with IDR price", () => {
+  const fx = fixtures.find((f) => f.label === "indodax-buy-btc-jumlah");
+  assert.ok(fx, "fixture missing");
+  const r = indodaxParser({ ...fx, receivedAt: new Date() });
+  assert.ok(r, "parser should match Jumlah/Total Bayar");
+  assert.equal(r.parserKey, "indodax");
+  assert.equal(r.kind, "cex_trade");
+  assert.equal(r.data.side, "buy");
+  assert.equal(r.data.asset, "BTC");
+  assert.equal(r.data.amount, "0.01");
+  assert.equal(r.data.fiat, "IDR");
+  assert.equal(r.data.fiatAmount, "12.500.000");
+  assert.equal(r.data.price, "1.250.000.000");
+  assert.equal(r.data.counterparty, "indodax");
+  assert.equal(r.data.chain, "cex");
+  assert.ok(r.confidence >= 0.9);
 });
 
 test("parseEmail: routes correct parser based on sender", () => {

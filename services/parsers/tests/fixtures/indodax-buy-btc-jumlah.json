@@ -1,0 +1,6 @@
+{
+  "label": "indodax-buy-btc-jumlah",
+  "from": "noreply@indodax.com",
+  "subject": "Beli BTC berhasil",
+  "bodyText": "Pembelian BTC Anda telah berhasil.\nJumlah: 0.01 BTC\nHarga: Rp 1.250.000.000\nTotal Bayar: Rp 12.500.000"
+}

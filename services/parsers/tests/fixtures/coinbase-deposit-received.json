@@ -1,0 +1,6 @@
+{
+  "label": "coinbase-deposit-received",
+  "from": "no-reply@coinbase.com",
+  "subject": "You received 0.5 BTC",
+  "bodyText": "You've received 0.5 BTC from 0xabc...123.\n\nTransaction ID: 0xdeadbeef1234567890abcdef1234567890abcdef\nConfirmations: 12"
+}

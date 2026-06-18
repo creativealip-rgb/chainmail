@@ -97,7 +97,19 @@ route.get("/messages/:id", async (c) => {
   let linkedReceipt = null;
   if (row.receiptId) {
     const [r] = await db.select().from(receipts).where(eq(receipts.id, row.receiptId)).limit(1);
-    linkedReceipt = r ?? null;
+    if (r) {
+      // Merge parser-specific fields from raw JSONB into top-level for client convenience
+      const raw = (r.raw ?? {}) as Record<string, unknown>;
+      const pricePerUnit = r.assetPriceUsd
+        ?? (typeof raw.price === "string" ? raw.price : null)
+        ?? (typeof raw.priceUsd === "string" ? raw.priceUsd : null);
+      linkedReceipt = {
+        ...r,
+        pricePerUnit,
+        fiat: typeof raw.fiat === "string" ? raw.fiat : null,
+        fiatAmount: typeof raw.fiatAmount === "string" ? raw.fiatAmount : null,
+      };
+    }
   }
 
   return c.json({ message: row, receipt: linkedReceipt });

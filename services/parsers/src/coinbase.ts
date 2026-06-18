@@ -7,7 +7,9 @@ import type { Parser, EmailEnvelope, ParsedReceipt } from "./index.js";
 
 const RE_BUY_SELL = /(Bought|Sold)\s+([\d.,]+)\s+(\w+)\s+(?:for|at)\s+\$?([\d.,]+)/i;
 const RE_DEPOSIT = /(?:Deposit|Deposited|Deposit of)\s+(?:of\s+)?([\d.,]+)\s+(\w+)/i;
+const RE_DEPOSIT_RECEIVED = /(?:received|credited)\s+([\d.,]+)\s+(\w+)/i;
 const RE_WITHDRAWAL = /Withdrew\s+([\d.,]+)\s+(\w+)/i;
+const RE_TXHASH = /(?:Transaction\s+(?:ID|Hash)|TxHash|TX)[:\s]+(0x[a-fA-F0-9]{8,64})/i;
 
 export const coinbaseParser: Parser = (email: EmailEnvelope): ParsedReceipt | null => {
   const isCoinbase =
@@ -16,6 +18,7 @@ export const coinbaseParser: Parser = (email: EmailEnvelope): ParsedReceipt | nu
   if (!isCoinbase) return null;
 
   const text = email.bodyText;
+  const txHash = text.match(RE_TXHASH)?.[1] ?? null;
 
   // Try trade first
   const trade = text.match(RE_BUY_SELL);
@@ -26,23 +29,34 @@ export const coinbaseParser: Parser = (email: EmailEnvelope): ParsedReceipt | nu
       source: "coinbase",
       summary: `${trade[1]} ${trade[2]} ${trade[3]} at $${trade[4]}`,
       data: {
-        side: trade[1].toLowerCase(), // "bought" or "sold"
+        side: trade[1].toLowerCase(),
         amount: trade[2],
         asset: trade[3].toUpperCase(),
         priceUsd: trade[4],
+        fiat: "USD",
+        fiatAmount: trade[4],
+        chain: "cex",
+        txHash,
+        counterparty: "coinbase",
       },
       confidence: 0.95,
     };
   }
 
-  const deposit = text.match(RE_DEPOSIT);
+  const deposit = text.match(RE_DEPOSIT) ?? text.match(RE_DEPOSIT_RECEIVED);
   if (deposit) {
     return {
       parserKey: "coinbase",
       kind: "cex_deposit",
       source: "coinbase",
       summary: `Deposit ${deposit[1] ?? ""} ${deposit[2] ?? ""}`,
-      data: { amount: deposit[1] ?? null, asset: (deposit[2] ?? "").toUpperCase() },
+      data: {
+        amount: deposit[1] ?? null,
+        asset: (deposit[2] ?? "").toUpperCase(),
+        chain: "cex",
+        txHash,
+        counterparty: "coinbase",
+      },
       confidence: 0.9,
     };
   }
@@ -54,7 +68,13 @@ export const coinbaseParser: Parser = (email: EmailEnvelope): ParsedReceipt | nu
       kind: "cex_withdrawal",
       source: "coinbase",
       summary: `Withdraw ${withdrawal[1] ?? ""} ${withdrawal[2] ?? ""}`,
-      data: { amount: withdrawal[1] ?? null, asset: (withdrawal[2] ?? "").toUpperCase() },
+      data: {
+        amount: withdrawal[1] ?? null,
+        asset: (withdrawal[2] ?? "").toUpperCase(),
+        chain: "cex",
+        txHash,
+        counterparty: "coinbase",
+      },
       confidence: 0.9,
     };
   }

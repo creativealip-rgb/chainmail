@@ -31,9 +31,10 @@ export interface ApiReceipt {
   chain: string | null;
   asset: string | null;
   amount: number | null;
-  pricePerUnit: number | null;
+  pricePerUnit: number | string | null;
   fiat: string | null;
-  fiatAmount: number | null;
+  fiatAmount: number | string | null;
+  assetPriceUsd: number | string | null;
   txHash: string | null;
   counterparty: string | null;
   confidence: number | null;

@@ -116,6 +116,15 @@ ingestRoute.post("/", async (c) => {
     // Strip commas/spaces from amount before numeric insert ("5,000,000" → "5000000")
     const rawAmount = typeof parsedReceipt.data.amount === "string" ? parsedReceipt.data.amount : null;
     const cleanAmount = rawAmount?.replace(/[,\s]/g, "") ?? null;
+    // Extract price + fiat fields. Only store in assetPriceUsd if currency is USD
+    // (DB column is numeric and assumes US format — can't store "1.250.000" IDR).
+    const rawPrice = parsedReceipt.data as Record<string, unknown>;
+    const fiat = typeof rawPrice.fiat === "string" ? rawPrice.fiat.toUpperCase() : null;
+    const priceStr = typeof rawPrice.price === "string" ? rawPrice.price : typeof rawPrice.priceUsd === "string" ? rawPrice.priceUsd : null;
+    const isUsdPrice = fiat === "USD" || (priceStr && !rawPrice.fiat && /^\d+(\.\d+)?$/.test(priceStr));
+    const cleanPrice = isUsdPrice && priceStr ? priceStr.replace(/[,\s]/g, "") : null;
+    const fiatStr = typeof rawPrice.fiatAmount === "string" ? rawPrice.fiatAmount : null;
+    const cleanFiatAmount = fiatStr?.replace(/[,\s]/g, "") ?? null;
     const [insertedReceipt] = await db
       .insert(receipts)
       .values({
@@ -125,10 +134,11 @@ ingestRoute.post("/", async (c) => {
         chain: typeof parsedReceipt.data.chain === "string" ? parsedReceipt.data.chain : null,
         asset: typeof parsedReceipt.data.asset === "string" ? parsedReceipt.data.asset.toUpperCase() : null,
         amount: cleanAmount,
+        assetPriceUsd: cleanPrice, // store price in numeric column (whatever fiat, label is in raw.fiat)
         txHash: typeof parsedReceipt.data.txHash === "string" ? parsedReceipt.data.txHash : null,
         counterparty: parsedReceipt.source,
         status: "confirmed",
-        raw: parsedReceipt.data,
+        raw: { ...parsedReceipt.data, fiat, fiatAmount: cleanFiatAmount },
         occurredAt: email.receivedAt,
       })
       .returning({ id: receipts.id });
