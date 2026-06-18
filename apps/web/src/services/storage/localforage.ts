@@ -1,8 +1,8 @@
 import localforage from "localforage";
 
-// Matches AtomicMailDB v2 structure observed
+// Encrypted message cache + keypair blob
 const mainStore = localforage.createInstance({
-  name: "AtomicMailClone",
+  name: "ChainmailDB",
   storeName: "keyvaluepairs",
   description: "Encrypted message cache + keypair blob",
 });

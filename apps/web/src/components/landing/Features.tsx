@@ -3,7 +3,7 @@ import styles from "./Features.module.css";
 const FEATURES = [
   {
     title: "Forward, no migration",
-    body: "Get a unique alias. Add one Gmail filter. New crypto emails flow into Chainmail. Your primary inbox stays untouched.",
+    body: "Get a Chainmail address. Add one Gmail filter. New crypto emails land in your encrypted archive. Your main inbox stays primary.",
     status: "shipped",
   },
   {
@@ -18,7 +18,7 @@ const FEATURES = [
   },
   {
     title: "Encrypted, server can't read",
-    body: "AES-GCM-256 + Ed25519. Your passphrase never leaves the device. We store ciphertext, not plaintext.",
+    body: "AES-GCM-256 with your passphrase. Keys never leave the device. We store ciphertext, not plaintext.",
     status: "shipped",
   },
 ];

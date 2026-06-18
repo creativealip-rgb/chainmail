@@ -31,10 +31,10 @@ export function TechStack() {
   return (
     <section id="stack">
       <header className={styles.header}>
-        <h2>Built with</h2>
+        <h2>Stack</h2>
         <p>
-          Same primitives you would pick for a production encrypted email
-          client, minus the vendor lock-in.
+          Every dependency is in package.json. Nothing is a secret until
+          runtime.
         </p>
       </header>
 

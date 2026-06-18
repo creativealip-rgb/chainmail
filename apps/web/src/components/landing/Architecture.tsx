@@ -15,7 +15,10 @@ export function Architecture() {
     <section id="architecture">
       <header className={styles.header}>
         <h2>How a receipt flows</h2>
-        <p>From Coinbase's SMTP server to your searchable archive in under 5 seconds. Server stores ciphertext only.</p>
+        <p>
+          From Coinbase's SMTP server to your searchable archive. Receipt
+          parsed in under a second after the email arrives.
+        </p>
       </header>
 
       <div className={styles.layers}>

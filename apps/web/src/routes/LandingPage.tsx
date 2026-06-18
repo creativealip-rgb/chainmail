@@ -17,8 +17,8 @@ export default function LandingPage() {
       <main>
         <Hero />
         <Features />
-        <TechStack />
         <Architecture />
+        <TechStack />
         <CallToAction />
       </main>
       <Footer />

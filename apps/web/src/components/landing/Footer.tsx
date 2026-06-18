@@ -13,13 +13,12 @@ export function Footer() {
           <span className={styles.copy}>© {year}</span>
         </div>
         <div className={styles.links}>
-          <a href="https://atomicmail.io" target="_blank" rel="noreferrer">Inspired by Atomic Mail ↗</a>
           <a href="https://github.com/creativealip-rgb/chainmail" target="_blank" rel="noreferrer">GitHub ↗</a>
-          <a href="/docs/struktur.md" target="_blank" rel="noreferrer">Architecture doc</a>
-          <a href="/docs/desain.md" target="_blank" rel="noreferrer">Design doc</a>
+          <a href="https://github.com/creativealip-rgb/chainmail/blob/main/PLAN.md" target="_blank" rel="noreferrer">Roadmap</a>
+          <a href="https://github.com/creativealip-rgb/chainmail/blob/main/README.md" target="_blank" rel="noreferrer">README</a>
         </div>
         <p className={styles.note}>
-          Unofficial project. Not affiliated with Atomic Mail Systems OÜ. Original product at atomicmail.io.
+          Open-source under MIT. Built by Alip.
         </p>
       </div>
     </footer>
