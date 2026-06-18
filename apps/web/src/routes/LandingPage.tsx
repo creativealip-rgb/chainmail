@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@ui/ui";
 import { Hero } from "@/components/landing/Hero";
 import { Features } from "@/components/landing/Features";
-import { TechStack } from "@/components/landing/TechStack";
 import { Architecture } from "@/components/landing/Architecture";
 import { CallToAction } from "@/components/landing/CallToAction";
 import { TopNav } from "@/components/landing/TopNav";
@@ -18,7 +17,6 @@ export default function LandingPage() {
         <Hero />
         <Features />
         <Architecture />
-        <TechStack />
         <CallToAction />
       </main>
       <Footer />

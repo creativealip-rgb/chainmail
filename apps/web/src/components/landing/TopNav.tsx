@@ -13,7 +13,6 @@ export function TopNav() {
 
       <nav className={styles.links}>
         <a href="#features">Features</a>
-        <a href="#stack">Stack</a>
         <a href="#architecture">Architecture</a>
         <a
           href="https://github.com/creativealip-rgb/chainmail"
