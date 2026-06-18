@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: services/api/Dockerfile
+    image: chainmail-api:latest
+    container_name: chainmail-api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgres://chainmail:***@10.0.1.137:5432/chainmail
+      - JWT_ACCESS_SECRET=znxBPKpBOdnDu9EbMoBlmEFjjwxbDN1v9jRLG1Afvc7pwZ78
+      - JWT_REFRESH_SECRET=pVkL2mQcR4tY8uIj6oNp1aS3dF7gH0eW9xZ5bC2vBnM4qArE
+    networks:
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true
