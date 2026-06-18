@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useNavigate } from "react-router-dom";
 import { moveMessage, setMessageLabels, fetchMessageDetail, starMessage } from "@/store/slices/messagesSlice";
 import { decrementUnread } from "@/store/slices/foldersSlice";
+import { LabelPicker } from "@/components/message/LabelPicker";
 import styles from "./MessageList.module.css";
 
 interface Props {
@@ -116,6 +117,7 @@ export function MessageList({ messages }: Props) {
                 >
                   {m.starred ? "★" : "☆"}
                 </button>
+                <LabelPicker messageId={m.id} compact />
                 <button
                   className={styles.actionBtn}
                   title="Archive"

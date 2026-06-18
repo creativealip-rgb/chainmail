@@ -14,6 +14,7 @@ export interface ApiMessage {
   parsedAt: string | null;
   readAt: string | null;
   receivedAt: string;
+  labels?: ApiMessageLabel[];
 }
 
 export interface ApiMessageDetail extends ApiMessage {
@@ -211,6 +212,10 @@ const messagesSlice = createSlice({
         s.list = a.payload.messages;
         s.activeFolder = a.payload.folder;
         s.activeLabelId = a.payload.labelId;
+        // Populate per-message labels so the row picker shows current state
+        for (const m of a.payload.messages) {
+          if (m.labels) s.labelsByMessage[m.id] = m.labels;
+        }
       })
       .addCase(fetchMessages.rejected, (s, a) => {
         s.loading = false;

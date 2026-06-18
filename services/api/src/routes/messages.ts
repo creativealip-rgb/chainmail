@@ -141,10 +141,32 @@ route.get("/messages", async (c) => {
       .offset(q.data.offset);
   }
 
+  // Fetch labels for all message IDs in a single query (avoids N+1)
+  const messageIds = rows.map((r) => r.id);
+  const labelsByMsg = new Map<string, { id: string; name: string; color: string }[]>();
+  if (messageIds.length > 0) {
+    const labelRows = await db
+      .select({
+        messageId: messageLabels.messageId,
+        id: labels.id,
+        name: labels.name,
+        color: labels.color,
+      })
+      .from(messageLabels)
+      .innerJoin(labels, eq(messageLabels.labelId, labels.id))
+      .where(inArray(messageLabels.messageId, messageIds));
+    for (const lr of labelRows) {
+      const arr = labelsByMsg.get(lr.messageId) ?? [];
+      arr.push({ id: lr.id, name: lr.name, color: lr.color });
+      labelsByMsg.set(lr.messageId, arr);
+    }
+  }
+
   return c.json({
     messages: rows.map((r) => ({
       ...r,
       aliasEmail: userAliases.find((a) => a.id === r.aliasId)?.email,
+      labels: labelsByMsg.get(r.id) ?? [],
     })),
     total: rows.length,
     limit: q.data.limit,

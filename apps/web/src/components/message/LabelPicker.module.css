@@ -18,6 +18,18 @@
 }
 .trigger:hover { background: var(--bg-hover); }
 
+.triggerCompact {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  font-size: 14px;
+  justify-content: center;
+}
+.triggerCompact:hover {
+  background: var(--bg-hover-strong);
+  color: var(--color-neutral-900);
+}
+
 .count {
   display: inline-flex;
   align-items: center;
@@ -33,17 +45,16 @@
 }
 
 .dropdown {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  min-width: 220px;
+  position: fixed;
+  min-width: 240px;
+  max-width: 280px;
   max-height: 320px;
   overflow-y: auto;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--r-md);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  z-index: 50;
+  z-index: 1000;
   padding: 4px;
 }
 
