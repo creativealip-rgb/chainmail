@@ -37,6 +37,35 @@
   text-transform: uppercase;
 }
 
+.dirBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.statusChip {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  background: #3a3a45;
+  color: #cfcfd6;
+}
+.statusChip[data-status="queued"]  { background: #f59e0b; color: #1a1a23; }
+.statusChip[data-status="sent"]    { background: #10b981; color: #052e1f; }
+.statusChip[data-status="failed"]  { background: #ef4444; color: #fff; }
+.statusChip[data-status="received"]{ background: #3a3a45; color: #cfcfd6; }
+
 .unparsed {
   color: var(--color-text-muted, #9ca3af);
   font-size: 11px;

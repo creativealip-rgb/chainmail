@@ -25,6 +25,12 @@ export const messages = pgTable(
     folder: text("folder").notNull().default("inbox"),
     // Starred flag (independent of folder — a message can be starred in any folder)
     starred: boolean("starred").notNull().default(false),
+    // Direction: 'inbound' (received from external) or 'outbound' (sent via composer)
+    direction: text("direction").notNull().default("inbound"),
+    // Delivery status: 'received' (inbound, in inbox) | 'queued' (outbound, not yet relayed) | 'sent' (outbound, relayed via SMTP) | 'failed' (outbound, relay error)
+    status: text("status").notNull().default("received"),
+    // Error message if status='failed'
+    statusDetail: text("status_detail"),
     // Parsed receipt (NULL if parser didn't match)
     receiptId: uuid("receipt_id"),
     // Set once parser matches a known sender (e.g. "coinbase", "binance", "etherscan")
@@ -41,5 +47,7 @@ export const messages = pgTable(
     parserIdx: index("messages_parser_idx").on(t.parserKey),
     folderIdx: index("messages_folder_idx").on(t.folder),
     starredIdx: index("messages_starred_idx").on(t.starred),
+    directionIdx: index("messages_direction_idx").on(t.direction),
+    statusIdx: index("messages_status_idx").on(t.status),
   })
 );

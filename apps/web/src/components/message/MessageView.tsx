@@ -137,9 +137,29 @@ export function MessageView({ messageId }: Props) {
   if (!msg) return <div className={styles.empty}>Message not found</div>;
 
   const badge = msg.parserKey ? PARSER_LABELS[msg.parserKey] : null;
+  const isOutbound = msg.direction === "outbound";
 
   return (
     <article className={styles.view}>
+      {isOutbound && (
+        <div
+          className={styles.outboundBanner}
+          data-status={msg.status}
+          role="status"
+        >
+          <span className={styles.outboundIcon}>→</span>
+          <strong>Outbound message</strong>
+          <span>
+            Status: <code>{msg.status}</code>
+            {msg.statusDetail ? ` — ${msg.statusDetail}` : null}
+          </span>
+          {msg.status === "queued" && (
+            <span className={styles.outboundHint}>
+              SMTP relay ships in W6 — for now this is stored locally as a queued message.
+            </span>
+          )}
+        </div>
+      )}
       <header className={styles.header}>
         {badge && (
           <span
@@ -151,8 +171,8 @@ export function MessageView({ messageId }: Props) {
         )}
         <h1 className={styles.subject}>{msg.subject ?? "(no subject)"}</h1>
         <div className={styles.meta}>
-          <strong>{msg.fromName ?? msg.fromAddr}</strong>
-          <span className={styles.fromAddr}>&lt;{msg.fromAddr}&gt;</span>
+          <strong>{isOutbound ? msg.aliasEmail : msg.fromName ?? msg.fromAddr}</strong>
+          {!isOutbound && <span className={styles.fromAddr}>&lt;{msg.fromAddr}&gt;</span>}
           <span>
             to{" "}
             {(msg.toAddrs ?? []).map((a, i) => (

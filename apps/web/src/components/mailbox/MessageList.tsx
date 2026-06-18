@@ -59,6 +59,7 @@ export function MessageList({ messages }: Props) {
       {messages.map((m) => {
         const badge = m.parserKey ? PARSER_BADGE[m.parserKey] : null;
         const msgLabels = labelsByMessage[m.id] ?? [];
+        const isOutbound = m.direction === "outbound";
         return (
           <li
             key={m.id}
@@ -74,7 +75,15 @@ export function MessageList({ messages }: Props) {
             }}
           >
             <div className={styles.left}>
-              {badge && (
+              {isOutbound ? (
+                <span
+                  className={styles.dirBadge}
+                  style={{ background: "#3a3a45", color: "#cfcfd6" }}
+                  title="Outbound (sent from your alias)"
+                >
+                  →
+                </span>
+              ) : badge ? (
                 <span
                   className={styles.badge}
                   style={{ background: badge.color }}
@@ -82,15 +91,27 @@ export function MessageList({ messages }: Props) {
                 >
                   {badge.label}
                 </span>
+              ) : (
+                <span className={styles.unparsed} title="No parser matched">—</span>
               )}
-              {!badge && <span className={styles.unparsed} title="No parser matched">—</span>}
             </div>
             <div className={styles.middle}>
               <div className={styles.subject}>
                 {m.subject ?? <em>(no subject)</em>}
+                {isOutbound && (
+                  <span
+                    className={styles.statusChip}
+                    data-status={m.status}
+                    title={m.statusDetail ?? m.status}
+                  >
+                    {m.status}
+                  </span>
+                )}
               </div>
               <div className={styles.from}>
-                {m.fromName ?? m.fromAddr} → <span className={styles.alias}>{m.aliasEmail}</span>
+                {isOutbound
+                  ? `to ${(m.toAddrs ?? []).join(", ") || "(unknown)"} · via ${m.aliasEmail}`
+                  : `${m.fromName ?? m.fromAddr} → ${m.aliasEmail}`}
               </div>
               {msgLabels.length > 0 && (
                 <div className={styles.labels}>

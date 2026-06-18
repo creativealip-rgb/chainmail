@@ -103,9 +103,12 @@ route.get("/messages", async (c) => {
         aliasId: messages.aliasId,
         fromAddr: messages.fromAddr,
         fromName: messages.fromName,
+        toAddrs: messages.toAddrs,
         subject: messages.subject,
         folder: messages.folder,
         starred: messages.starred,
+        direction: messages.direction,
+        status: messages.status,
         parserKey: messages.parserKey,
         receiptId: messages.receiptId,
         parsedAt: messages.parsedAt,
@@ -125,9 +128,12 @@ route.get("/messages", async (c) => {
         aliasId: messages.aliasId,
         fromAddr: messages.fromAddr,
         fromName: messages.fromName,
+        toAddrs: messages.toAddrs,
         subject: messages.subject,
         folder: messages.folder,
         starred: messages.starred,
+        direction: messages.direction,
+        status: messages.status,
         parserKey: messages.parserKey,
         receiptId: messages.receiptId,
         parsedAt: messages.parsedAt,
@@ -174,6 +180,64 @@ route.get("/messages", async (c) => {
     folder,
     labelId: q.data.labelId ?? null,
   });
+});
+
+// ── /api/messages (POST: send outbound) ───────────────────────
+const sendBody = z.object({
+  aliasId: z.string().uuid().optional(),
+  to: z.array(z.string().email()).min(1).max(20),
+  cc: z.array(z.string().email()).max(20).optional(),
+  bcc: z.array(z.string().email()).max(20).optional(),
+  subject: z.string().max(998).default(""),
+  bodyText: z.string().default(""),
+  bodyHtml: z.string().optional(),
+});
+
+route.post("/messages", async (c) => {
+  const userId = c.get("userId");
+  const parsed = sendBody.safeParse(await c.req.json().catch(() => ({})));
+  if (!parsed.success) return c.json({ error: "invalid body", issues: parsed.error.flatten() }, 400);
+
+  // Resolve sending alias
+  let aliasId = parsed.data.aliasId;
+  if (!aliasId) {
+    const userAliasList = await db
+      .select({ id: aliases.id, email: aliases.email })
+      .from(aliases)
+      .where(eq(aliases.userId, userId))
+      .limit(1);
+    if (userAliasList.length === 0) return c.json({ error: "no alias — create one first" }, 400);
+    aliasId = userAliasList[0].id;
+  }
+  const [ownAlias] = await db
+    .select({ id: aliases.id, email: aliases.email })
+    .from(aliases)
+    .where(and(eq(aliases.id, aliasId), eq(aliases.userId, userId)))
+    .limit(1);
+  if (!ownAlias) return c.json({ error: "alias not found" }, 404);
+
+  // Plaintext body stored for MVP. W3.5 client-side encryption will replace this.
+  const bodyText = parsed.data.bodyText || "";
+  const bodyHtml = parsed.data.bodyHtml ?? (bodyText ? `<p>${bodyText.replace(/\n/g, "<br>")}</p>` : "");
+
+  const [row] = await db
+    .insert(messages)
+    .values({
+      aliasId: ownAlias.id,
+      fromAddr: ownAlias.email,
+      fromName: null,
+      toAddrs: parsed.data.to,
+      subject: parsed.data.subject,
+      bodyText,
+      bodyHtml,
+      folder: "sent",
+      direction: "outbound",
+      status: "queued",
+      receivedAt: new Date(),
+    })
+    .returning();
+
+  return c.json({ message: row }, 201);
 });
 
 route.get("/messages/:id", async (c) => {

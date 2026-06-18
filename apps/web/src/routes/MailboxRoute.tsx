@@ -1,6 +1,7 @@
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { TopBar } from "@/components/topbar/TopBar";
 import { MailboxView } from "@/components/mailbox/MailboxView";
+import { Composer } from "@/components/composer/Composer";
 import { useParams } from "react-router-dom";
 
 interface Props {
@@ -20,6 +21,7 @@ export default function MailboxRoute({ labelView }: Props) {
         <TopBar />
         <MailboxView mailboxId={folderId ?? "inbox"} labelId={labelId} />
       </div>
+      <Composer />
     </div>
   );
 }

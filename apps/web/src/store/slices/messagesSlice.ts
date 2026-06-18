@@ -6,9 +6,13 @@ export interface ApiMessage {
   aliasEmail: string;
   fromAddr: string;
   fromName: string | null;
+  toAddrs?: string[];
   subject: string | null;
   folder: string;
   starred: boolean;
+  direction: "inbound" | "outbound";
+  status: "received" | "queued" | "sent" | "failed";
+  statusDetail?: string | null;
   parserKey: string | null;
   receiptId: string | null;
   parsedAt: string | null;
@@ -164,6 +168,41 @@ export const markAllRead = createAsyncThunk<
   return (await res.json()) as { updated: number; folder: string; labelId: string | null };
 });
 
+/** Send an outbound message (POST /api/messages) */
+export const sendMessage = createAsyncThunk<
+  ApiMessage,
+  {
+    aliasId?: string;
+    to: string[];
+    cc?: string[];
+    bcc?: string[];
+    subject: string;
+    bodyText: string;
+    bodyHtml?: string;
+  },
+  { rejectValue: string }
+>("messages/send", async (payload, { rejectWithValue }) => {
+  const token = getToken();
+  if (!token) return rejectWithValue("not authenticated");
+  const res = await fetch(import.meta.env.VITE_API_URL + "/api/messages", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "content-type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    let err = `send failed (${res.status})`;
+    try {
+      const j = (await res.json()) as { error?: string };
+      if (j?.error) err = j.error;
+    } catch {
+      /* keep default */
+    }
+    return rejectWithValue(err);
+  }
+  const data = (await res.json()) as { message: ApiMessage };
+  return data.message;
+});
+
 /** Set labels on a message (replaces existing assignments) */
 export const setMessageLabels = createAsyncThunk<
   { id: string; labels: ApiMessageLabel[] },
@@ -245,6 +284,13 @@ const messagesSlice = createSlice({
       })
       .addCase(setMessageLabels.fulfilled, (s, a) => {
         s.labelsByMessage[a.payload.id] = a.payload.labels;
+      })
+      .addCase(sendMessage.fulfilled, (s, a) => {
+        // Prepend the new outbound message so user sees it in current view
+        s.list = [a.payload, ...s.list];
+      })
+      .addCase(sendMessage.rejected, (s, a) => {
+        s.error = a.payload ?? "send failed";
       });
   },
 });
