@@ -1,4 +1,9 @@
-# Atomic Mail — Clone
+# Chainmail — Plan
+
+> **Status**: 🟡 Planning v0.1 · 2026-06-18
+> **Repo**: `/root/projects/atomicmail-clone` (renaming to `chainmail` after branding lock)
+> **Live demo**: `https://chainmail.168-144-37-19.sslip.io` (after deploy; current `atomicmail-clone.168-144-37-19.sslip.io`)
+> **Full plan**: see [`PLAN.md`](./PLAN.md)
 
 > E2E encrypted email client · React + Vite + TypeScript pnpm workspace
 >
