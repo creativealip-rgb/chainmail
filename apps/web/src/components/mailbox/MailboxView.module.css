@@ -72,8 +72,18 @@
 .empty {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--space-3);
   color: var(--color-neutral-500);
   font-size: var(--fs-base);
+  text-align: center;
+  padding: var(--space-5);
+}
+
+.hint {
+  color: var(--color-neutral-400);
+  font-size: var(--fs-sm);
+  max-width: 420px;
 }

@@ -11,7 +11,7 @@ export default function MessageRoute() {
       <Sidebar />
       <div className="dashboard-main">
         <TopBar />
-        <MessageView mailboxId={mailbox ?? "inbox"} messageId={id ?? ""} />
+        <MessageView messageId={id ?? ""} />
       </div>
     </div>
   );

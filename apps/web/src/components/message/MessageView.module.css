@@ -63,3 +63,96 @@
   justify-content: center;
   color: var(--color-neutral-500);
 }
+
+.parserBadge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+
+.fromAddr,
+.toAddr,
+.timestamp {
+  color: var(--color-neutral-500);
+  font-size: var(--fs-xs);
+}
+
+.toAddr {
+  background: var(--bg-base);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin: 0 2px;
+  font-family: ui-monospace, monospace;
+}
+
+.receipt {
+  margin: 0;
+  padding: var(--space-5) var(--space-6);
+  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.receiptTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-neutral-700);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.receiptGrid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  font-size: var(--fs-sm);
+}
+
+.receiptGrid dt {
+  color: var(--color-neutral-500);
+  font-weight: var(--fw-medium);
+}
+
+.receiptGrid dd {
+  margin: 0;
+  color: var(--color-neutral-900);
+  font-family: ui-monospace, monospace;
+}
+
+.receiptType {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--color-brand-blue);
+  color: #fff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.txHash {
+  word-break: break-all;
+  font-size: var(--fs-xs);
+}
+
+.body {
+  padding: var(--space-6);
+  flex: 1;
+  overflow-y: auto;
+  line-height: 1.6;
+  color: var(--color-neutral-800);
+  background: var(--bg-surface);
+}
+
+.body p {
+  margin: 0 0 var(--space-3);
+}

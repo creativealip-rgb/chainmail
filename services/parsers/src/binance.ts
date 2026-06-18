@@ -16,6 +16,9 @@ const RE_TRADE = /(Buy|Sell)\s+([\d.,]+)\s+(\w+)\s+at\s+([\d.,]+)/i;
 // Fallback: "Amount: 1000 USDT ... Status: Confirmed"
 const RE_AMOUNT_STATUS = /Amount[:\s]+([\d.,]+)\s+(\w+)[\s\S]{0,200}?(?:Status[:\s]+)?(?:Confirmed|received|successful)/i;
 
+// "TX: 0xfeedbeef" / "Transaction ID: 0xabc..." / "TxHash: 0x..." (case-insensitive, hex 0x + 40-64 chars)
+const RE_TXHASH = /(?:TX|TxHash|Transaction(?:\s+ID|\s+Hash)?|Hash)[:\s]+(0x[a-fA-F0-9]{8,64})/i;
+
 export const binanceParser: Parser = (email: EmailEnvelope): ParsedReceipt | null => {
   const isBinance =
     email.from.toLowerCase().includes("binance") ||
@@ -23,6 +26,7 @@ export const binanceParser: Parser = (email: EmailEnvelope): ParsedReceipt | nul
   if (!isBinance) return null;
 
   const text = email.bodyText;
+  const txHash = text.match(RE_TXHASH)?.[1] ?? null;
 
   const deposit = text.match(RE_DEPOSIT) ?? text.match(RE_AMOUNT_STATUS);
   if (deposit && /deposit/i.test(text)) {
@@ -31,7 +35,13 @@ export const binanceParser: Parser = (email: EmailEnvelope): ParsedReceipt | nul
       kind: "cex_deposit",
       source: "binance",
       summary: `Deposit ${deposit[1] ?? ""} ${deposit[2] ?? ""} received`,
-      data: { amount: deposit[1] ?? null, asset: (deposit[2] ?? "").toUpperCase() },
+      data: {
+        amount: deposit[1] ?? null,
+        asset: (deposit[2] ?? "").toUpperCase(),
+        chain: "cex",
+        txHash,
+        counterparty: "binance",
+      },
       confidence: 0.95,
     };
   }
@@ -43,7 +53,13 @@ export const binanceParser: Parser = (email: EmailEnvelope): ParsedReceipt | nul
       kind: "cex_withdrawal",
       source: "binance",
       summary: `Withdraw ${withdrawal[1] ?? ""} ${withdrawal[2] ?? ""} completed`,
-      data: { amount: withdrawal[1] ?? null, asset: (withdrawal[2] ?? "").toUpperCase() },
+      data: {
+        amount: withdrawal[1] ?? null,
+        asset: (withdrawal[2] ?? "").toUpperCase(),
+        chain: "cex",
+        txHash,
+        counterparty: "binance",
+      },
       confidence: 0.95,
     };
   }
@@ -55,7 +71,15 @@ export const binanceParser: Parser = (email: EmailEnvelope): ParsedReceipt | nul
       kind: "cex_trade",
       source: "binance",
       summary: `${trade[1]} ${trade[2]} ${trade[3]} at ${trade[4]}`,
-      data: { side: trade[1]?.toLowerCase() ?? "", amount: trade[2] ?? null, asset: (trade[3] ?? "").toUpperCase(), price: trade[4] ?? null },
+      data: {
+        side: trade[1]?.toLowerCase() ?? "",
+        amount: trade[2] ?? null,
+        asset: (trade[3] ?? "").toUpperCase(),
+        price: trade[4] ?? null,
+        chain: "cex",
+        txHash,
+        counterparty: "binance",
+      },
       confidence: 0.9,
     };
   }

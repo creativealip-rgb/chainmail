@@ -73,3 +73,18 @@ svg {
   background: var(--color-brand-blue);
   color: white;
 }
+
+/* Dashboard layout — sidebar + main */
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-base);
+}
+
+.dashboard-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
