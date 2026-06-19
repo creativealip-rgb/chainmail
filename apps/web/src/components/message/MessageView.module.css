@@ -22,7 +22,7 @@
   flex-direction: column;
   gap: var(--space-1);
   font-size: var(--fs-sm);
-  color: var(--color-neutral-600);
+  color: var(--text-muted);
 }
 .meta strong { color: var(--color-neutral-900); font-weight: var(--fw-medium); }
 
@@ -61,7 +61,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-neutral-500);
+  color: var(--text-faint);
 }
 
 .parserBadge {
@@ -79,7 +79,7 @@
 .fromAddr,
 .toAddr,
 .timestamp {
-  color: var(--color-neutral-500);
+  color: var(--text-faint);
   font-size: var(--fs-xs);
 }
 
@@ -102,7 +102,7 @@
   margin: 0 0 var(--space-3);
   font-size: var(--fs-sm);
   font-weight: var(--fw-semibold);
-  color: var(--color-neutral-700);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -116,7 +116,7 @@
 }
 
 .receiptGrid dt {
-  color: var(--color-neutral-500);
+  color: var(--text-faint);
   font-weight: var(--fw-medium);
 }
 

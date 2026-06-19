@@ -7,7 +7,7 @@
 }
 .header p {
   font-size: var(--fs-lg);
-  color: var(--color-neutral-600);
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -34,7 +34,7 @@
   font-size: 11px;
   font-weight: var(--fw-semibold);
   letter-spacing: 0.04em;
-  color: var(--color-neutral-500);
+  color: var(--text-faint);
   background: var(--bg-base);
   border-radius: 6px;
   padding: 2px 6px;
@@ -82,7 +82,7 @@
 
 .body {
   font-size: var(--fs-sm);
-  color: var(--color-neutral-600);
+  color: var(--text-muted);
   line-height: var(--lh-loose);
   margin: 0;
 }

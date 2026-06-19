@@ -7,7 +7,7 @@
 }
 .header p {
   font-size: var(--fs-lg);
-  color: var(--color-neutral-600);
+  color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -54,11 +54,11 @@
   background: var(--color-neutral-100);
   padding: 2px 8px;
   border-radius: var(--r-sm);
-  color: var(--color-neutral-700);
+  color: var(--text-secondary);
   margin-bottom: var(--space-2);
 }
 .layerDetail {
   font-size: var(--fs-sm);
-  color: var(--color-neutral-600);
+  color: var(--text-muted);
   line-height: var(--lh-loose);
 }

@@ -43,6 +43,13 @@
   --border-subtle: var(--color-neutral-200);
   --border-strong: var(--color-neutral-300);
 
+  /* ─── Text (semantic) ─── */
+  --text-primary: var(--color-neutral-900);     /* headings, body */
+  --text-secondary: var(--color-neutral-700);   /* labels, captions — AA on bg-base */
+  --text-muted: var(--color-neutral-600);       /* hints, timestamps — AA on bg-surface */
+  --text-faint: var(--color-neutral-500);       /* decorative, dividers, fine print */
+  --text-inverse: var(--color-neutral-0);       /* on dark backgrounds */
+
   /* ─── Status ─── */
   --color-success: var(--color-brand-green-deep);
   --color-warning: var(--color-brand-orange);
@@ -147,6 +154,13 @@
   --color-neutral-700: #c5c5c5;
   --color-neutral-800: #cfcfcf;
   --color-neutral-900: #f5f5f4;
+
+  /* Semantic text — flip the lighter direction in dark mode for AA contrast */
+  --text-primary: #f5f5f4;
+  --text-secondary: #c5c5c5;
+  --text-muted: #ababab;
+  --text-faint: #777776;
+  --text-inverse: #0f0f0f;
 }
 
 /* System preference fallback */
@@ -171,5 +185,11 @@
     --color-neutral-700: #c5c5c5;
     --color-neutral-800: #cfcfcf;
     --color-neutral-900: #f5f5f4;
+
+    --text-primary: #f5f5f4;
+    --text-secondary: #c5c5c5;
+    --text-muted: #ababab;
+    --text-faint: #777776;
+    --text-inverse: #0f0f0f;
   }
 }

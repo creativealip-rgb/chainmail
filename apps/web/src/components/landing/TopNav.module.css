@@ -42,7 +42,7 @@
   font-size: var(--fs-base);
 }
 .links a {
-  color: var(--color-neutral-700);
+  color: var(--text-secondary);
   text-decoration: none;
   transition: color var(--d-fast) var(--ease-default);
 }

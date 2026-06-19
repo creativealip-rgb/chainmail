@@ -14,7 +14,7 @@
 }
 .cta p {
   font-size: var(--fs-base);
-  color: var(--color-neutral-700);
+  color: var(--text-secondary);
   max-width: 540px;
   margin: 0 auto var(--space-6);
   line-height: var(--lh-loose);

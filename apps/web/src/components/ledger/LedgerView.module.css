@@ -27,11 +27,11 @@
 .subtitle {
   margin: 4px 0 0;
   font-size: var(--fs-sm);
-  color: var(--color-neutral-600);
+  color: var(--text-muted);
 }
 
 .muted {
-  color: var(--color-neutral-500);
+  color: var(--text-faint);
   font-size: var(--fs-xs);
 }
 
@@ -87,7 +87,7 @@
   border-bottom: 1px solid var(--border-subtle);
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
-  color: var(--color-neutral-600);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -108,7 +108,7 @@
 
 .numCell {
   text-align: right;
-  color: var(--color-neutral-600);
+  color: var(--text-muted);
   font-weight: var(--fw-medium);
 }
 
@@ -144,7 +144,7 @@
 
 .chainLabel {
   font-size: var(--fs-sm);
-  color: var(--color-neutral-700);
+  color: var(--text-secondary);
   font-weight: var(--fw-medium);
 }
 
@@ -164,7 +164,7 @@
 .chainCount {
   text-align: right;
   font-size: var(--fs-sm);
-  color: var(--color-neutral-700);
+  color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
   font-weight: var(--fw-medium);
 }
@@ -191,7 +191,7 @@
 
 .monthName {
   font-size: var(--fs-xs);
-  color: var(--color-neutral-600);
+  color: var(--text-muted);
   text-transform: uppercase;
   font-weight: var(--fw-medium);
   letter-spacing: 0.04em;
@@ -212,7 +212,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-3);
-  color: var(--color-neutral-500);
+  color: var(--text-faint);
   font-size: var(--fs-base);
   text-align: center;
   padding: var(--space-7) var(--space-5);
@@ -230,5 +230,5 @@
   margin: 0;
   font-size: var(--fs-lg);
   font-weight: var(--fw-semibold);
-  color: var(--color-neutral-700);
+  color: var(--text-secondary);
 }

@@ -28,14 +28,14 @@
   font-size: var(--fs-sm);
 }
 .links a {
-  color: var(--color-neutral-700);
+  color: var(--text-secondary);
   text-decoration: none;
 }
 .links a:hover { color: var(--color-neutral-900); text-decoration: none; }
 
 .note {
   font-size: var(--fs-xs);
-  color: var(--color-neutral-500);
+  color: var(--text-faint);
   margin: 0;
   border-top: 1px solid var(--border-subtle);
   padding-top: var(--space-3);

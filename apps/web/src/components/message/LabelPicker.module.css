@@ -64,13 +64,13 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-neutral-500);
+  color: var(--text-faint);
 }
 
 .empty {
   padding: 12px 10px;
   font-size: var(--fs-sm);
-  color: var(--color-neutral-500);
+  color: var(--text-faint);
   text-align: center;
 }
 
@@ -190,7 +190,7 @@
 }
 .btnGhost {
   background: var(--bg-surface);
-  color: var(--color-neutral-700);
+  color: var(--text-secondary);
 }
 .btnGhost:hover { background: var(--bg-hover); }
 .btnPrimary {
