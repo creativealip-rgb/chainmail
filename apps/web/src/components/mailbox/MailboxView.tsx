@@ -57,8 +57,26 @@ export function MailboxView({ mailboxId, labelId }: Props) {
   const emptyHint = labelId
     ? "Apply this label to a message from the message view."
     : mailboxId === "inbox"
-    ? "Create an alias in the sidebar, set up a Gmail filter, and forward your first crypto email."
+    ? "Forward your first crypto receipt to your alias — it will appear here in real time."
     : "Nothing here yet.";
+
+  const emptyIllustration =
+    mailboxId === "inbox" ? "📬" :
+    mailboxId === "sent" ? "📤" :
+    mailboxId === "drafts" ? "📝" :
+    mailboxId === "trash" ? "🗑" :
+    mailboxId === "junk" ? "🚫" :
+    mailboxId === "archive" ? "🗄" :
+    mailboxId === "starred" || mailboxId === "flagged" ? "★" :
+    mailboxId === "important" ? "!" :
+    "📭";
+
+  const inboxSteps =
+    mailboxId === "inbox" ? [
+      "Create an alias in the sidebar",
+      "Set up a Gmail filter to forward crypto receipts",
+      "Watch parsed transactions appear in real time",
+    ] : null;
 
   return (
     <div className={styles.view}>
@@ -72,9 +90,22 @@ export function MailboxView({ mailboxId, labelId }: Props) {
         unreadCount={list.filter((m) => !m.readAt).length}
       />
       {list.length === 0 ? (
-        <div className={styles.empty}>
-          <p>No messages.</p>
+        <div className={styles.empty} data-testid="empty-state">
+          <div className={styles.emptyIllustration} aria-hidden>
+            {emptyIllustration}
+          </div>
+          <p className={styles.emptyTitle}>Your inbox is empty</p>
           <p className={styles.hint}>{emptyHint}</p>
+          {inboxSteps && (
+            <ol className={styles.steps}>
+              {inboxSteps.map((s, i) => (
+                <li key={i} className={styles.step}>
+                  <span className={styles.stepNum}>{i + 1}</span>
+                  <span>{s}</span>
+                </li>
+              ))}
+            </ol>
+          )}
         </div>
       ) : (
         <MessageList messages={list} />

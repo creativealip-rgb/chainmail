@@ -28,6 +28,12 @@ function timeAgo(iso: string): string {
   return `${d}d ago`;
 }
 
+function aliasLocal(email: string | null | undefined): string {
+  if (!email) return "—";
+  const at = email.indexOf("@");
+  return at > 0 ? email.slice(0, at) : email;
+}
+
 export function MessageList({ messages }: Props) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -109,9 +115,11 @@ export function MessageList({ messages }: Props) {
                 )}
               </div>
               <div className={styles.from}>
-                {isOutbound
-                  ? `to ${(m.toAddrs ?? []).join(", ") || "(unknown)"} · via ${m.aliasEmail}`
-                  : `${m.fromName ?? m.fromAddr} → ${m.aliasEmail}`}
+                {isOutbound ? (
+                  <>to {(m.toAddrs ?? []).join(", ") || "(unknown)"} <span className={styles.via}>via</span> <span className={styles.alias}>{aliasLocal(m.aliasEmail)}</span></>
+                ) : (
+                  <><span className={styles.senderName}>{m.fromName ?? m.fromAddr}</span> <span className={styles.via}>→</span> <span className={styles.alias}>{aliasLocal(m.aliasEmail)}</span></>
+                )}
               </div>
               {msgLabels.length > 0 && (
                 <div className={styles.labels}>

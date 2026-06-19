@@ -105,6 +105,16 @@
   font-weight: 500;
 }
 
+.via {
+  color: var(--color-text-muted, #9ca3af);
+  margin: 0 4px;
+}
+
+.senderName {
+  color: var(--color-text, #1a1a1a);
+  font-weight: 500;
+}
+
 .right {
   display: flex;
   align-items: center;

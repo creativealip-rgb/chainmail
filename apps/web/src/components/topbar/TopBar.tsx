@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setSearchQuery } from "@/store/slices/uiSlice";
-import { open as openComposer } from "@/store/slices/composerSlice";
-import { signOut } from "@/store/slices/authSlice";
 import { AvatarMenu } from "./AvatarMenu";
 import { ThemeToggle } from "./ThemeToggle";
+import { signOut } from "@/store/slices/authSlice";
 import { isDemoMode } from "@/services/api/client";
 import styles from "./TopBar.module.css";
 
@@ -52,9 +51,6 @@ export function TopBar() {
       </form>
 
       <div className={styles.right}>
-        <button className={styles.composeBtn} onClick={() => dispatch(openComposer())}>
-          ✎ Compose
-        </button>
         <ThemeToggle />
         <AvatarMenu user={user} />
       </div>
