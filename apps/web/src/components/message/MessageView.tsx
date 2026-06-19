@@ -4,18 +4,12 @@ import type { RootState } from "@/store";
 import type { ApiMessageDetail, ApiReceipt } from "@/store/slices/messagesSlice";
 import { decryptMessageBody, getUnlockedKey, type KeyPair } from "@/services/crypto/vault";
 import { LabelPicker } from "./LabelPicker";
+import { parserMeta } from "@/services/parserRegistry";
 import styles from "./MessageView.module.css";
 
 interface Props {
   messageId: string;
 }
-
-const PARSER_LABELS: Record<string, { label: string; color: string }> = {
-  coinbase: { label: "Coinbase", color: "#1652f0" },
-  binance: { label: "Binance", color: "#f0b90b" },
-  etherscan: { label: "Etherscan", color: "#5d8aaa" },
-  indodax: { label: "Indodax", color: "#f15a22" },
-};
 
 function formatAmount(n: number | string): string {
   const num = typeof n === "string" ? Number(n) : n;
@@ -136,7 +130,7 @@ export function MessageView({ messageId }: Props) {
   if (error) return <div className={styles.empty}>Failed to load: {error}</div>;
   if (!msg) return <div className={styles.empty}>Message not found</div>;
 
-  const badge = msg.parserKey ? PARSER_LABELS[msg.parserKey] : null;
+  const badge = parserMeta(msg.parserKey);
   const isOutbound = msg.direction === "outbound";
 
   return (

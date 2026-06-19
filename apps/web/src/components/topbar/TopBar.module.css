@@ -177,6 +177,14 @@
 }
 .menuItem:hover { background: var(--bg-hover); }
 
+.menuIcon {
+  width: 18px;
+  margin-right: var(--space-2);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1;
+}
+
 .divider {
   border: none;
   border-top: 1px solid var(--border-subtle);

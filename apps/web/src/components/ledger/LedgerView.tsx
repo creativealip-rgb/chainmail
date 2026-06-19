@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { apiGet } from "@/services/api/client";
+import { parserMeta, chainMeta, ACTIVE_PARSER_COUNT } from "@/services/parserRegistry";
 import styles from "./LedgerView.module.css";
 
 interface AssetBucket {
@@ -40,16 +41,6 @@ interface LedgerData {
 }
 
 const SOURCE_LABELS: Record<string, { label: string; color: string }> = {
-  coinbase:    { label: "Coinbase",    color: "#1652f0" },
-  binance:     { label: "Binance",     color: "#f0b90b" },
-  indodax:     { label: "Indodax",     color: "#f15a22" },
-  kraken:      { label: "Kraken",      color: "#7132f5" },
-  tokocrypto:  { label: "Tokocrypto",  color: "#00b894" },
-  uniswap:     { label: "Uniswap",     color: "#ff007a" },
-  opensea:     { label: "OpenSea",     color: "#2081e2" },
-  phantom:     { label: "Phantom",     color: "#ab9ff2" },
-  metamask:    { label: "MetaMask",    color: "#f6851b" },
-  etherscan:   { label: "Etherscan",   color: "#5d8aaa" },
   cex:         { label: "CEX (generic)", color: "#6b7280" },
   dex:         { label: "DEX (generic)", color: "#ec4899" },
   evm:         { label: "EVM",         color: "#627eea" },
@@ -57,6 +48,12 @@ const SOURCE_LABELS: Record<string, { label: string; color: string }> = {
   cex_chain:   { label: "CEX",         color: "#6b7280" },
   unknown:     { label: "Unknown",     color: "#9ca3af" },
 };
+
+// Source buckets fall back to parser registry first (covers all 10 parsers),
+// then the chain/generic maps above.
+function resolveSourceMeta(source: string): { label: string; color: string } {
+  return parserMeta(source) ?? chainMeta(source) ?? SOURCE_LABELS[source] ?? { label: source, color: "#6b7280" };
+}
 
 function fmtAmount(n: number): string {
   if (n === 0) return "—";
@@ -162,7 +159,7 @@ export function LedgerView({ year, isAuth }: { year: number; isAuth: boolean }) 
             <h2 className={styles.sectionTitle}>By Source</h2>
             <div className={styles.tagCloud}>
               {data.perSource.map((s) => {
-                const meta = SOURCE_LABELS[s.source] ?? { label: s.source, color: "#6b7280" };
+                const meta = resolveSourceMeta(s.source);
                 return (
                   <span
                     key={s.source}
@@ -184,7 +181,7 @@ export function LedgerView({ year, isAuth }: { year: number; isAuth: boolean }) 
               {data.perChain.map((c) => {
                 const max = Math.max(...data.perChain.map((x) => x.txCount));
                 const pct = max > 0 ? (c.txCount / max) * 100 : 0;
-                const meta = SOURCE_LABELS[c.chain] ?? { label: c.chain, color: "#6b7280" };
+                const meta = resolveSourceMeta(c.chain);
                 return (
                   <div key={c.chain} className={styles.chainRow}>
                     <div className={styles.chainLabel}>{meta.label}</div>
@@ -208,15 +205,19 @@ export function LedgerView({ year, isAuth }: { year: number; isAuth: boolean }) 
               {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
                 const bucket = data.perMonth.find((x) => x.month === m);
                 const count = bucket?.txCount ?? 0;
-                const max = Math.max(1, ...data.perMonth.map((x) => x.txCount));
-                const intensity = count / max;
+                const max = Math.max(...data.perMonth.map((x) => x.txCount));
+                // When only one month has data it should render at "high" intensity,
+                // not the 15% wash that "0/0" would produce.
+                const intensity = max > 0 && count > 0
+                  ? 0.45 + (count / max) * 0.55
+                  : 0;
                 return (
                   <div
                     key={m}
                     className={styles.monthCell}
                     style={{
                       background: count > 0
-                        ? `rgba(15, 118, 110, ${0.15 + intensity * 0.6})`
+                        ? `rgba(15, 118, 110, ${intensity})`
                         : "var(--bg-base)",
                       borderColor: count > 0 ? "var(--color-accent, #0f766e)" : "var(--border-subtle)",
                     }}

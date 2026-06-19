@@ -18,6 +18,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  transition: background-color var(--d-base) var(--ease-out),
+              color var(--d-base) var(--ease-out);
 }
 
 #root {

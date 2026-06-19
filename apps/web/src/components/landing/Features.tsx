@@ -1,3 +1,4 @@
+import { ACTIVE_PARSER_COUNT } from "@/services/parserRegistry";
 import styles from "./Features.module.css";
 
 const FEATURES = [
@@ -7,14 +8,14 @@ const FEATURES = [
     status: "shipped",
   },
   {
-    title: "Parse CEX, DEX, NFT, explorer",
-    body: "Coinbase, Binance, Etherscan at launch. Uniswap, OpenSea, Phantom, Indodax next. Each parser tested against 50+ real emails.",
-    status: "wip",
+    title: `${ACTIVE_PARSER_COUNT} parsers, CEX + DEX + NFT + explorer`,
+    body: `Coinbase, Binance, Etherscan at launch. Kraken, Tokocrypto, Uniswap, OpenSea, Phantom, MetaMask, Indodax now live. Each parser tested against real emails.`,
+    status: "shipped",
   },
   {
     title: "CSV export, tax season ready",
     body: "Per-year, per-exchange, per-chain rollup. Koinly and CoinTracker import format. Stop pasting CSVs from five exchanges by hand.",
-    status: "wip",
+    status: "shipped",
   },
   {
     title: "Encrypted, server can't read",
@@ -38,7 +39,7 @@ export function Features() {
 
       <div className={styles.grid}>
         {FEATURES.map((f, i) => (
-          <div key={f.title} className={styles.card}>
+          <div key={f.title} className={styles.card} data-status={f.status}>
             <div className={styles.cardHeader}>
               <span className={styles.numeral} aria-hidden>{String(i + 1).padStart(2, "0")}</span>
               <h3 className={styles.title}>{f.title}</h3>

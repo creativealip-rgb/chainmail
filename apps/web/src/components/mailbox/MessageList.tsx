@@ -4,24 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { moveMessage, setMessageLabels, fetchMessageDetail, starMessage } from "@/store/slices/messagesSlice";
 import { decrementUnread } from "@/store/slices/foldersSlice";
 import { LabelPicker } from "@/components/message/LabelPicker";
+import { parserMeta } from "@/services/parserRegistry";
 import styles from "./MessageList.module.css";
 
 interface Props {
   messages: ApiMessage[];
 }
-
-const PARSER_BADGE: Record<string, { label: string; color: string }> = {
-  coinbase:    { label: "Coinbase",     color: "#1652f0" },
-  binance:     { label: "Binance",      color: "#f0b90b" },
-  etherscan:   { label: "Etherscan",    color: "#5d8aaa" },
-  indodax:     { label: "Indodax",      color: "#f15a22" },
-  kraken:      { label: "Kraken",       color: "#7132f5" },
-  tokocrypto:  { label: "Tokocrypto",   color: "#00b894" },
-  uniswap:     { label: "Uniswap",      color: "#ff007a" },
-  opensea:     { label: "OpenSea",      color: "#2081e2" },
-  phantom:     { label: "Phantom",      color: "#ab9ff2" },
-  metamask:    { label: "MetaMask",     color: "#f6851b" },
-};
 
 function timeAgo(iso: string): string {
   const ms = Date.now() - new Date(iso).getTime();
@@ -69,7 +57,7 @@ export function MessageList({ messages }: Props) {
   return (
     <ul className={styles.list}>
       {messages.map((m) => {
-        const badge = m.parserKey ? PARSER_BADGE[m.parserKey] : null;
+        const badge = parserMeta(m.parserKey);
         const msgLabels = labelsByMessage[m.id] ?? [];
         const isOutbound = m.direction === "outbound";
         return (

@@ -1,13 +1,14 @@
+import { ACTIVE_PARSER_COUNT, PARSER_REGISTRY } from "@/services/parserRegistry";
 import styles from "./Architecture.module.css";
 
 const LAYERS = [
-  { name: "Inbox", tech: "Haraka SMTP", detail: "budi+a7f2@chainmail.app" },
-  { name: "Ingest", tech: "BullMQ worker", detail: "raw MIME → message row" },
-  { name: "Parser", tech: "packages/parsers", detail: "Coinbase · Binance · Etherscan" },
-  { name: "Storage", tech: "Postgres + R2", detail: "encrypted blobs · indexed receipts" },
-  { name: "Realtime", tech: "Socket.IO", detail: "receipt:new · folder:unread" },
-  { name: "API", tech: "Hono + Drizzle", detail: "api.chainmail.app" },
-  { name: "Client", tech: "React + WebCrypto", detail: "decrypts locally · zero plaintext" },
+  { name: "Inbox",    tech: "Haraka SMTP",                  detail: "budi+a7f2@chainmail.app" },
+  { name: "Ingest",   tech: "BullMQ worker",                detail: "raw MIME → message row" },
+  { name: "Parser",   tech: `packages/parsers (${ACTIVE_PARSER_COUNT} live)`, detail: Object.keys(PARSER_REGISTRY).join(" · ") },
+  { name: "Storage",  tech: "Postgres + R2",                detail: "encrypted blobs · indexed receipts" },
+  { name: "Realtime", tech: "Socket.IO",                    detail: "receipt:new · folder:unread" },
+  { name: "API",      tech: "Hono + Drizzle",               detail: "api.chainmail.app" },
+  { name: "Client",   tech: "React + WebCrypto",            detail: "decrypts locally · zero plaintext" },
 ];
 
 export function Architecture() {
@@ -16,7 +17,7 @@ export function Architecture() {
       <header className={styles.header}>
         <h2>How a receipt flows</h2>
         <p>
-          From Coinbase's SMTP server to your searchable archive. Receipt
+          From Coinbase&apos;s SMTP server to your searchable archive. Receipt
           parsed in under a second after the email arrives.
         </p>
       </header>

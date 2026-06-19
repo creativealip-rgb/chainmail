@@ -49,13 +49,20 @@ export function Sidebar() {
   return (
     <aside className={styles.sidebar} aria-label="Primary navigation">
       <Link to="/" className={styles.logo}>
-        <span className={styles.logoMark}>⚛</span>
+        <svg className={styles.logoMark} width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <rect x="2" y="6" width="20" height="13" rx="2.5" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M2.5 8.5 12 14l9.5-5.5" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+          <circle cx="12" cy="3" r="1.6" fill="var(--color-brand-blue)" />
+        </svg>
         <span className={styles.logoText}>Chainmail</span>
         <span className={styles.beta}>beta</span>
       </Link>
 
       <Link to="/app/mailbox/inbox" className={styles.compose} onClick={() => dispatch(setActive("inbox"))}>
-        <span className={styles.composeIcon}>✎</span>
+        <svg className={styles.composeIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M12 20h9" />
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+        </svg>
         Compose
       </Link>
 
@@ -65,11 +72,12 @@ export function Sidebar() {
 
       <Link
         to="/app/ledger"
-        className={styles.privacyCenter}
+        className={styles.ledgerLink}
         onClick={() => dispatch(setActive("all"))}
         title="Tax-year rollup — see all your parsed receipts by year"
       >
-        📊 LEDGER
+        <span className={styles.menuIcon} aria-hidden>📊</span>
+        Ledger
       </Link>
 
       <div className={styles.section}>
