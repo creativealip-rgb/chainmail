@@ -173,14 +173,13 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--r-sm, 4px);
-  font-size: 14px;
   background: transparent;
-  color: var(--color-text-muted, #5a5a5a);
-  transition: background 100ms;
+  color: var(--text-secondary);
+  transition: background var(--d-fast) var(--ease-default), color var(--d-fast) var(--ease-default);
 }
 .actionBtn:hover {
-  background: var(--bg-hover-strong, #e5e7eb);
-  color: var(--color-text, #0a0a0a);
+  background: var(--bg-hover);
+  color: var(--text-primary);
 }
 
 .starred {
