@@ -183,7 +183,13 @@ export function LabelPicker({ messageId, compact = false }: Props) {
                           aria-hidden="true"
                         />
                         <span className={styles.name}>{l.name}</span>
-                        <span className={styles.check}>{checked ? "✓" : ""}</span>
+                        <span className={styles.check}>
+                          {checked ? (
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                              <path d="M5 12l5 5L20 7" />
+                            </svg>
+                          ) : null}
+                        </span>
                       </button>
                     </li>
                   );

@@ -131,6 +131,12 @@
   /* ─── Layout ─── */
   --sidebar-width: 280px;
   --topbar-height: 56px;
+
+  /* ─── Status backgrounds (semantic) ─── */
+  --bg-danger: #fef2f2;
+  --bg-warn: #fffbeb;
+  --text-danger: #b91c1c;
+  --text-warn: #92400e;
 }
 
 /* ─── Dark Theme ─── */
@@ -142,6 +148,11 @@
   --bg-active: rgba(255, 255, 255, 0.12);
   --border-subtle: #2a2a2c;
   --border-strong: #3a3a3c;
+
+  --bg-danger: rgba(255, 54, 54, 0.12);
+  --bg-warn: rgba(251, 188, 4, 0.12);
+  --text-danger: #ff7a7a;
+  --text-warn: #fbcc4d;
 
   --color-neutral-0: #0f0f0f;
   --color-neutral-50: #1a1a1c;
@@ -173,6 +184,11 @@
     --bg-active: rgba(255, 255, 255, 0.12);
     --border-subtle: #2a2a2c;
     --border-strong: #3a3a3c;
+
+    --bg-danger: rgba(255, 54, 54, 0.12);
+    --bg-warn: rgba(251, 188, 4, 0.12);
+    --text-danger: #ff7a7a;
+    --text-warn: #fbcc4d;
 
     --color-neutral-0: #0f0f0f;
     --color-neutral-50: #1a1a1c;

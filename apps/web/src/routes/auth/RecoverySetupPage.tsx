@@ -66,10 +66,17 @@ export default function RecoverySetupPage() {
       </p>
 
       <div className={styles.recoveryWarning} role="alert">
-        <strong>⚠️ Write this down or store it in a password manager.</strong>
-        <br />
-        If you lose both your password <em>and</em> this code, your encrypted
-        messages are gone forever — even we can't read them.
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ flexShrink: 0, marginTop: 2 }}>
+          <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <div>
+          <strong>Write this down or store it in a password manager.</strong>
+          <br />
+          If you lose both your password <em>and</em> this code, your encrypted
+          messages are gone forever — even we can't read them.
+        </div>
       </div>
 
       <div className={styles.recoveryBox}>
@@ -100,7 +107,22 @@ export default function RecoverySetupPage() {
           onClick={copy}
           className={styles.secondary}
         >
-          {copied ? "✓ Copied" : "📋 Copy"}
+          {copied ? (
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ verticalAlign: "-2px", marginRight: 6 }}>
+                <path d="M5 12l5 5L20 7" />
+              </svg>
+              Copied
+            </span>
+          ) : (
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ verticalAlign: "-2px", marginRight: 6 }}>
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              Copy
+            </span>
+          )}
         </button>
       </div>
 

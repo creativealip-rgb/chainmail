@@ -67,7 +67,11 @@ export function Sidebar() {
       </Link>
 
       <button className={styles.privacyCenter} onClick={() => dispatch(setPrivacyCenter(true))}>
-        🔒 PRIVACY CENTER
+        <svg className={styles.menuIcon} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <rect x="3" y="11" width="18" height="11" rx="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        PRIVACY CENTER
       </button>
 
       <Link
@@ -76,7 +80,14 @@ export function Sidebar() {
         onClick={() => dispatch(setActive("all"))}
         title="Tax-year rollup — see all your parsed receipts by year"
       >
-        <span className={styles.menuIcon} aria-hidden>📊</span>
+        <span className={styles.menuIcon} aria-hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 3v18h18" />
+            <rect x="7" y="12" width="3" height="6" />
+            <rect x="12" y="8" width="3" height="10" />
+            <rect x="17" y="5" width="3" height="13" />
+          </svg>
+        </span>
         Ledger
       </Link>
 
@@ -132,8 +143,11 @@ export function Sidebar() {
               className={styles.newLabelSubmit}
               onClick={handleNewLabel}
               disabled={!newLabelName.trim()}
+              aria-label="Confirm"
             >
-              ✓
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M5 12l5 5L20 7" />
+              </svg>
             </button>
           </div>
         )}

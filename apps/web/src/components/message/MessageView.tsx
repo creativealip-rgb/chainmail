@@ -301,9 +301,21 @@ export function MessageView({ messageId }: Props) {
             <p key={i}>{line || "\u00a0"}</p>
           ))
         ) : decrypting ? (
-          <p className={styles.empty}>🔐 Decrypting…</p>
+          <p className={styles.empty}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ verticalAlign: "-3px", marginRight: 6 }}>
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            Decrypting…
+          </p>
         ) : msg.encryptedBody && !demoMode ? (
-          <p className={styles.empty}>🔒 Locked. Re-enter your password to read this message.</p>
+          <p className={styles.empty}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ verticalAlign: "-3px", marginRight: 6 }}>
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            Locked. Re-enter your password to read this message.
+          </p>
         ) : (
           (msg.bodyText ?? "(empty body)").split("\n").map((line, i) => (
             <p key={i}>{line || "\u00a0"}</p>

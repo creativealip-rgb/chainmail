@@ -18,7 +18,12 @@ export function TopBar() {
     <header className={styles.topbar}>
       {isDemoMode() && !auth.isAuthenticated && (
         <div className={styles.demoBadge} role="status">
-          🎯 DEMO MODE — using seed data, no real API calls
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ verticalAlign: "-2px", marginRight: 6 }}>
+            <circle cx="12" cy="12" r="10" />
+            <circle cx="12" cy="12" r="6" />
+            <circle cx="12" cy="12" r="2" />
+          </svg>
+          DEMO MODE — using seed data, no real API calls
         </div>
       )}
       {auth.isAuthenticated && (

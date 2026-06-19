@@ -2,20 +2,21 @@
   max-width: 420px;
   margin: 4rem auto;
   padding: 2.5rem 2rem;
-  background: var(--color-surface, #ffffff);
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .title {
   font-size: 1.5rem;
   font-weight: 600;
   margin: 1.5rem 0 0.25rem;
-  color: var(--color-text, #0a0a0a);
+  color: var(--text-primary);
 }
 
 .subtitle {
-  color: var(--color-text-muted, #5a5a5a);
+  color: var(--text-secondary);
   margin: 0 0 1.5rem;
   font-size: 0.95rem;
 }
@@ -31,41 +32,39 @@
   flex-direction: column;
   gap: 0.35rem;
   font-size: 0.85rem;
-  color: var(--color-text, #0a0a0a);
+  color: var(--text-primary);
 }
 
 .input {
   padding: 0.65rem 0.75rem;
-  border: 1px solid var(--color-border, #d4d4d8);
-  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
   font-size: 0.95rem;
-  background: var(--color-bg, #ffffff);
-  color: var(--color-text, #0a0a0a);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  transition: border-color var(--d-instant) var(--ease-default);
 }
-
 .input:focus {
-  outline: 2px solid var(--color-accent, #14b8a6);
-  outline-offset: 1px;
-  border-color: var(--color-accent, #14b8a6);
+  outline: none;
+  border-color: var(--color-brand-blue);
+  box-shadow: 0 0 0 3px rgba(6, 125, 247, 0.18);
 }
 
 .primary {
   margin-top: 0.5rem;
   padding: 0.7rem 1rem;
-  background: var(--color-accent, #14b8a6);
+  background: var(--color-brand-blue);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--r-sm);
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 120ms;
+  transition: background var(--d-instant) var(--ease-default);
 }
-
 .primary:hover:not(:disabled) {
-  background: var(--color-accent-hover, #0ea888);
+  background: var(--color-brand-blue-deep);
 }
-
 .primary:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -73,33 +72,37 @@
 
 .error {
   padding: 0.6rem 0.75rem;
-  background: #fef2f2;
-  color: #b91c1c;
-  border-radius: 6px;
+  background: var(--bg-danger);
+  color: var(--text-danger);
+  border-radius: var(--r-sm);
   font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .warn {
   padding: 0.6rem 0.75rem;
-  background: #fffbeb;
-  color: #92400e;
-  border-radius: 6px;
+  background: var(--bg-warn);
+  color: var(--text-warn);
+  border-radius: var(--r-sm);
   font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .altLink {
   margin-top: 1.5rem;
   font-size: 0.9rem;
-  color: var(--color-text-muted, #5a5a5a);
+  color: var(--text-secondary);
   text-align: center;
 }
-
 .altLink a {
-  color: var(--color-accent, #14b8a6);
+  color: var(--color-brand-blue);
   text-decoration: none;
   font-weight: 500;
 }
-
 .altLink a:hover {
   text-decoration: underline;
 }
@@ -108,20 +111,23 @@
 
 .recoveryWarning {
   padding: 0.85rem 1rem;
-  background: #fffbeb;
-  border: 1px solid #fcd34d;
-  border-radius: 8px;
-  color: #78350f;
+  background: var(--bg-warn);
+  border: 1px solid var(--color-brand-orange);
+  border-radius: var(--r-md);
+  color: var(--text-warn);
   font-size: 0.88rem;
   line-height: 1.5;
   margin-bottom: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
 }
 
 .recoveryBox {
   padding: 1.25rem;
-  background: var(--color-bg-alt, #f9fafb);
-  border: 1px solid var(--color-border, #d4d4d8);
-  border-radius: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
   margin-bottom: 1rem;
 }
 
@@ -139,15 +145,15 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.65rem;
-  background: var(--color-surface, #ffffff);
-  border: 1px solid var(--color-border, #e4e4e7);
-  border-radius: 6px;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.85rem;
 }
 
 .wordNum {
-  color: var(--color-text-muted, #9ca3af);
+  color: var(--text-muted);
   font-size: 0.7rem;
   min-width: 1.1rem;
   text-align: right;
@@ -155,14 +161,14 @@
 
 .wordText {
   font-weight: 500;
-  color: var(--color-text, #0a0a0a);
+  color: var(--text-primary);
 }
 
 .codeText {
   display: block;
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.9rem;
-  color: var(--color-text, #0a0a0a);
+  color: var(--text-primary);
   word-break: break-word;
   line-height: 1.6;
 }
@@ -177,17 +183,16 @@
   flex: 1;
   padding: 0.55rem 0.75rem;
   background: transparent;
-  color: var(--color-text, #0a0a0a);
-  border: 1px solid var(--color-border, #d4d4d8);
-  border-radius: 8px;
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 120ms;
+  transition: background var(--d-instant) var(--ease-default);
 }
-
 .secondary:hover {
-  background: var(--color-bg-alt, #f4f4f5);
+  background: var(--bg-hover);
 }
 
 .checkboxLabel {
@@ -196,14 +201,14 @@
   gap: 0.6rem;
   margin-bottom: 1.25rem;
   font-size: 0.9rem;
-  color: var(--color-text, #0a0a0a);
+  color: var(--text-primary);
   line-height: 1.4;
   cursor: pointer;
 }
-
 .checkboxLabel input {
   margin-top: 0.2rem;
   width: 1rem;
   height: 1rem;
   flex-shrink: 0;
+  accent-color: var(--color-brand-blue);
 }
