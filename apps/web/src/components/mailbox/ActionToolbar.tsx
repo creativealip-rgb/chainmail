@@ -10,14 +10,6 @@ interface Props {
   unreadCount: number;
 }
 
-function IconCheck() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
-
 function IconMail() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -27,34 +19,29 @@ function IconMail() {
   );
 }
 
-function IconFilter() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-    </svg>
-  );
-}
-
 export function ActionToolbar({ activeFolder, activeLabelId, unreadCount }: Props) {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector((s) => s.auth.isAuthenticated);
+  const messages = useAppSelector((s) => s.messages.list);
 
   const handleMarkAll = async () => {
     if (!isAuth) return;
+    // Read fresh unread count from current list to avoid stale closure after await
+    const freshUnread = messages.filter((m) => !m.readAt).length;
     if (activeLabelId) {
       await dispatch(markAllRead({ labelId: activeLabelId }));
     } else {
       await dispatch(markAllRead({ folder: activeFolder }));
     }
-    dispatch(fetchFolders());
-    dispatch(pushToast({ type: "success", message: `Marked ${unreadCount} as read` }));
+    await dispatch(fetchFolders());
+    dispatch(pushToast({
+      type: "success",
+      message: freshUnread > 0 ? `Marked ${freshUnread} as read` : "Already up to date",
+    }));
   };
 
   return (
     <nav className={styles.toolbar} aria-label="Message actions">
-      <button className={styles.toolbarBtn} disabled>
-        <IconCheck /> Select all
-      </button>
       <button
         className={styles.toolbarBtn}
         onClick={handleMarkAll}
@@ -62,9 +49,6 @@ export function ActionToolbar({ activeFolder, activeLabelId, unreadCount }: Prop
         title={unreadCount === 0 ? "No unread messages" : `Mark ${unreadCount} as read`}
       >
         <IconMail /> Mark all as read{unreadCount > 0 && ` (${unreadCount})`}
-      </button>
-      <button className={styles.toolbarBtn} disabled>
-        <IconFilter /> Filter
       </button>
     </nav>
   );
