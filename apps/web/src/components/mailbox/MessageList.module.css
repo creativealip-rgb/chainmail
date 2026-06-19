@@ -68,13 +68,13 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   vertical-align: middle;
-  background: var(--color-neutral-700);
-  color: var(--color-neutral-100);
+  background: #6b7280;
+  color: #ffffff;
 }
 .statusChip[data-status="queued"]  { background: #f59e0b; color: #1a1a23; }
 .statusChip[data-status="sent"]    { background: #10b981; color: #052e1f; }
 .statusChip[data-status="failed"]  { background: #ef4444; color: #fff; }
-.statusChip[data-status="received"]{ background: var(--color-neutral-700); color: var(--color-neutral-100); }
+.statusChip[data-status="received"]{ background: #6b7280; color: #ffffff; }
 
 .unparsed {
   color: var(--text-faint);

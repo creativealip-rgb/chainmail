@@ -85,13 +85,13 @@
   justify-content: space-between;
   margin-bottom: var(--space-1);
 }
-.sender { font-size: var(--fs-base); font-weight: var(--fw-medium); color: var(--color-neutral-900); }
+.sender { font-size: var(--fs-base); font-weight: var(--fw-medium); color: var(--text-primary); }
 .time { font-size: var(--fs-sm); color: var(--text-faint); font-variant-numeric: tabular-nums; }
 
 .subject {
   font-size: var(--fs-base);
   font-weight: var(--fw-medium);
-  color: var(--color-neutral-900);
+  color: var(--text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

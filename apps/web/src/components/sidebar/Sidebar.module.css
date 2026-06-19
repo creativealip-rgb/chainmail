@@ -28,11 +28,11 @@
 .logoText { flex: 1; }
 .beta {
   font-size: 9px;
-  color: var(--color-neutral-100);
+  color: var(--color-brand-blue);
   text-transform: uppercase;
   font-weight: var(--fw-bold);
   letter-spacing: 0.08em;
-  background: var(--color-neutral-700);
+  background: rgba(6, 125, 247, 0.12);
   padding: 2px 7px;
   border-radius: var(--r-full);
   line-height: 1.4;
@@ -41,21 +41,21 @@
 .compose {
   margin: 0 var(--space-4) var(--space-4);
   padding: var(--space-3) var(--space-4);
-  background: var(--color-neutral-900);
-  color: var(--color-neutral-0);
+  background: var(--color-brand-blue);
+  color: #ffffff;
   border-radius: var(--r-lg);
   text-align: center;
   text-decoration: none;
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-semibold);
   font-size: var(--fs-base);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  transition: background var(--d-fast) var(--ease-default), transform var(--d-instant) var(--ease-default);
 }
-.compose:hover { background: var(--color-neutral-800); text-decoration: none; }
-.compose:active { transform: scale(0.97); }
+.compose:hover { filter: brightness(1.08); text-decoration: none; }
+.compose:active { transform: scale(0.98); }
+.compose:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--color-brand-blue), 0 0 0 4px var(--bg-base); }
 .composeIcon { display: inline-flex; }
 
 .privacyCenter {
@@ -205,7 +205,7 @@
   width: 8px;
   height: 8px;
   border-radius: var(--r-full);
-  background: var(--color-neutral-300);
+  background: var(--border-strong);
   flex-shrink: 0;
 }
 .aliasEmail { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

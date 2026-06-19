@@ -21,7 +21,7 @@
   margin: 0;
   font-size: var(--fs-xl);
   font-weight: var(--fw-semibold);
-  color: var(--color-neutral-900);
+  color: var(--text-primary);
 }
 
 .subtitle {
@@ -36,17 +36,22 @@
 }
 
 .exportBtn {
-  padding: 8px 14px;
-  background: var(--color-neutral-900);
-  color: var(--color-neutral-0);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  height: 30px;
+  background: var(--color-brand-blue);
+  color: #fff;
   border-radius: var(--r-md);
   text-decoration: none;
   font-size: var(--fs-sm);
-  font-weight: var(--fw-medium);
-  transition: background var(--d-fast) var(--ease-default);
+  font-weight: var(--fw-semibold);
+  transition: filter var(--d-fast) var(--ease-default), transform var(--d-instant) var(--ease-default);
 }
-.exportBtn:hover { background: var(--color-neutral-800); text-decoration: none; }
+.exportBtn:hover { filter: brightness(1.08); text-decoration: none; }
 .exportBtn:active { transform: scale(0.97); }
+.exportBtn:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--color-brand-blue); }
 
 .grid {
   display: grid;
@@ -70,7 +75,7 @@
   margin: 0 0 var(--space-3);
   font-size: var(--fs-base);
   font-weight: var(--fw-semibold);
-  color: var(--color-neutral-800);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -83,7 +88,7 @@
 
 .table th {
   text-align: left;
-  padding: 8px 12px;
+  padding: var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--border-subtle);
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
@@ -93,22 +98,23 @@
 }
 
 .table td {
-  padding: 10px 12px;
+  padding: var(--space-3);
   border-bottom: 1px solid var(--border-subtle);
-  color: var(--color-neutral-800);
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
 
 .table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: var(--bg-hover); }
 
 .assetCell {
   font-weight: var(--fw-semibold);
-  color: var(--color-neutral-900);
+  color: var(--text-primary);
 }
 
 .numCell {
   text-align: right;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-weight: var(--fw-medium);
 }
 
@@ -119,11 +125,13 @@
 }
 
 .sourceTag {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: var(--r-md);
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 var(--space-2);
+  border-radius: var(--r-sm);
   color: white;
-  font-size: var(--fs-xs);
+  font-size: 11px;
   font-weight: var(--fw-semibold);
   letter-spacing: 0.02em;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
@@ -200,7 +208,7 @@
 .monthCount {
   font-size: var(--fs-lg);
   font-weight: var(--fw-semibold);
-  color: var(--color-neutral-900);
+  color: var(--text-primary);
   margin-top: 2px;
   font-variant-numeric: tabular-nums;
 }

@@ -123,15 +123,15 @@
 .composeBtn {
   height: 36px;
   padding: 0 var(--space-4);
-  background: var(--color-neutral-900);
-  color: var(--color-neutral-0);
+  background: var(--color-brand-blue);
+  color: #ffffff;
   border-radius: var(--r-md);
   font-size: var(--fs-base);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-semibold);
   cursor: pointer;
-  transition: transform var(--d-instant) var(--ease-default);
+  transition: filter var(--d-fast) var(--ease-default), transform var(--d-instant) var(--ease-default);
 }
-.composeBtn:hover { background: var(--color-neutral-800); }
+.composeBtn:hover { filter: brightness(1.08); }
 .composeBtn:active { transform: scale(0.97); }
 
 .themeToggle {
