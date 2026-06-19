@@ -11,6 +11,7 @@ const MailboxRoute = lazy(() => import("@/routes/MailboxRoute"));
 const MessageRoute = lazy(() => import("@/routes/MessageRoute"));
 const EncryptedRoute = lazy(() => import("@/routes/EncryptedRoute"));
 const RecoverySetupPage = lazy(() => import("@/routes/auth/RecoverySetupPage"));
+const LedgerRoute = lazy(() => import("@/routes/LedgerRoute"));
 
 export function App() {
   return (
@@ -25,6 +26,7 @@ export function App() {
               <Route path="mailbox/:mailbox" element={<MailboxRoute />} />
               <Route path="label/:labelId" element={<MailboxRoute labelView />} />
               <Route path="mailbox/:mailbox/message/:id" element={<MessageRoute />} />
+              <Route path="ledger" element={<LedgerRoute />} />
               <Route path="encrypted/:key" element={<EncryptedRoute />} />
               {/* W3.5: post-signup one-time recovery code display */}
               <Route path="setup-recovery" element={<RecoverySetupPage />} />

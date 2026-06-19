@@ -63,6 +63,15 @@ export function Sidebar() {
         🔒 PRIVACY CENTER
       </button>
 
+      <Link
+        to="/app/ledger"
+        className={styles.privacyCenter}
+        onClick={() => dispatch(setActive("all"))}
+        title="Tax-year rollup — see all your parsed receipts by year"
+      >
+        📊 LEDGER
+      </Link>
+
       <div className={styles.section}>
         <div className={styles.sectionHeader}>
           <span>FOLDERS</span>

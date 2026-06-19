@@ -63,7 +63,7 @@ export const api = ky.create({
   hooks: {
     beforeRequest: [
       (req) => {
-        const token = localStorage.getItem("session_token");
+        const token = localStorage.getItem("chainmail.access");
         if (token) req.headers.set("Authorization", `Bearer ${token}`);
       },
     ],

@@ -16,6 +16,7 @@ import { aliases } from "./routes/aliases.js";
 import { ingestRoute } from "./routes/ingest.js";
 import { messagesRoute } from "./routes/messages.js";
 import { foldersRoute } from "./routes/folders.js";
+import { ledgerRoute } from "./routes/ledger.js";
 import { errorHandler } from "./middleware/error.js";
 import { attachRealtime } from "./lib/realtime.js";
 import type { ChainmailVars } from "./middleware/auth.js";
@@ -44,6 +45,8 @@ app.route("/api/ingest", ingestRoute);
 app.route("/api", messagesRoute);
 // foldersRoute mounts /api/folders, /api/labels, /api/messages/:id, /api/messages/:id/labels
 app.route("/api", foldersRoute);
+// ledgerRoute mounts /api/ledger/:year — tax-year rollup
+app.route("/api", ledgerRoute);
 
 app.get("/", (c) => c.text("chainmail-api · see /api/health"));
 
