@@ -11,6 +11,12 @@ import { coinbaseParser } from "./coinbase.js";
 import { binanceParser } from "./binance.js";
 import { etherscanParser } from "./etherscan.js";
 import { indodaxParser } from "./indodax.js";
+import { krakenParser } from "./kraken.js";
+import { tokocryptoParser } from "./tokocrypto.js";
+import { uniswapParser } from "./uniswap.js";
+import { openseaParser } from "./opensea.js";
+import { phantomParser } from "./phantom.js";
+import { metamaskParser } from "./metamask.js";
 
 export type EmailKind = "cex_trade" | "cex_deposit" | "cex_withdrawal" | "dex_swap" | "nft_mint" | "tx_notification" | "unknown";
 
@@ -41,7 +47,18 @@ export interface ParsedReceipt {
 export type Parser = (email: EmailEnvelope) => ParsedReceipt | null;
 
 /** Registry: order matters. First match wins. Cheap checks first. */
-const PARSERS: Parser[] = [coinbaseParser, binanceParser, etherscanParser, indodaxParser];
+const PARSERS: Parser[] = [
+  coinbaseParser,
+  binanceParser,
+  etherscanParser,
+  indodaxParser,
+  krakenParser,
+  tokocryptoParser,
+  uniswapParser,
+  openseaParser,
+  phantomParser,
+  metamaskParser,
+];
 
 /** Try each parser in order. Returns first match or null. */
 export function parseEmail(email: EmailEnvelope): ParsedReceipt | null {
@@ -59,7 +76,24 @@ export function parserKeyForSender(fromAddr: string): string | null {
   if (f.includes("binance")) return "binance";
   if (f.includes("etherscan") || f.includes("ethereum")) return "etherscan";
   if (f.includes("indodax")) return "indodax";
+  if (f.includes("kraken")) return "kraken";
+  if (f.includes("tokocrypto")) return "tokocrypto";
+  if (f.includes("uniswap")) return "uniswap";
+  if (f.includes("opensea")) return "opensea";
+  if (f.includes("phantom")) return "phantom";
+  if (f.includes("metamask")) return "metamask";
   return null;
 }
 
-export { coinbaseParser, binanceParser, etherscanParser, indodaxParser };
+export {
+  coinbaseParser,
+  binanceParser,
+  etherscanParser,
+  indodaxParser,
+  krakenParser,
+  tokocryptoParser,
+  uniswapParser,
+  openseaParser,
+  phantomParser,
+  metamaskParser,
+};

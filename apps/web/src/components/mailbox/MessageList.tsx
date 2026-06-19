@@ -11,10 +11,16 @@ interface Props {
 }
 
 const PARSER_BADGE: Record<string, { label: string; color: string }> = {
-  coinbase: { label: "Coinbase", color: "#1652f0" },
-  binance: { label: "Binance", color: "#f0b90b" },
-  etherscan: { label: "Etherscan", color: "#5d8aaa" },
-  indodax: { label: "Indodax", color: "#f15a22" },
+  coinbase:    { label: "Coinbase",     color: "#1652f0" },
+  binance:     { label: "Binance",      color: "#f0b90b" },
+  etherscan:   { label: "Etherscan",    color: "#5d8aaa" },
+  indodax:     { label: "Indodax",      color: "#f15a22" },
+  kraken:      { label: "Kraken",       color: "#7132f5" },
+  tokocrypto:  { label: "Tokocrypto",   color: "#00b894" },
+  uniswap:     { label: "Uniswap",      color: "#ff007a" },
+  opensea:     { label: "OpenSea",      color: "#2081e2" },
+  phantom:     { label: "Phantom",      color: "#ab9ff2" },
+  metamask:    { label: "MetaMask",     color: "#f6851b" },
 };
 
 function timeAgo(iso: string): string {

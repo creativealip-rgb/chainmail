@@ -1,0 +1,7 @@
+{
+  "label": "opensea-purchase-nft",
+  "from": "noreply@opensea.io",
+  "fromName": "OpenSea",
+  "subject": "You purchased Bored Ape #1234",
+  "bodyText": "Congratulations on your new NFT!\nYou purchased Bored Ape #1234 for 15.5 ETH.\nTransaction Hash: 0xd1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2"
+}

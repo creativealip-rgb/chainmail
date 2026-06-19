@@ -1,0 +1,6 @@
+{
+  "label": "uniswap-swap-eth-usdc",
+  "from": "noreply@uniswap.org",
+  "subject": "Swap confirmed on Uniswap",
+  "bodyText": "Swap completed.\nYou swapped 0.5 ETH for 1,600.25 USDC on Uniswap V3.\nTransaction Hash: 0xc1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2\nNetwork: Ethereum Mainnet"
+}

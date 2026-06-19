@@ -1,0 +1,7 @@
+{
+  "label": "phantom-receive-sol",
+  "from": "noreply@phantom.app",
+  "fromName": "Phantom",
+  "subject": "You received SOL",
+  "bodyText": "You received 12.5 SOL from 7xKXt9W3...pq2m.\nSignature: 5Ab1Cd2Ef3Gh4Ij5Kl6Mn7Op8Qr9St0Uv1Wx2Yz3Ab4Cd5Ef6Gh7Ij8Kl9Mn0Op1Qr2St3Uv4Wx5Yz6Ab7Cd8Ef9Gh0Ij1Kl2Mn3Op4Qr5"
+}
