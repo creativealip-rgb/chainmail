@@ -5,6 +5,8 @@ import type { ApiMessageDetail, ApiReceipt } from "@/store/slices/messagesSlice"
 import { decryptMessageBody, getUnlockedKey, type KeyPair } from "@/services/crypto/vault";
 import { LabelPicker } from "./LabelPicker";
 import { parserMeta } from "@/services/parserRegistry";
+import { push as pushToast } from "@/store/slices/notificationsSlice";
+import { Skeleton, SkeletonRow } from "@/components/ui/Skeleton";
 import styles from "./MessageView.module.css";
 
 interface Props {
@@ -126,7 +128,21 @@ export function MessageView({ messageId }: Props) {
     };
   }, [msg, userId, demoMode]);
 
-  if (loading) return <div className={styles.empty}>Loading…</div>;
+  if (loading) {
+    return (
+      <div className={styles.view}>
+        <div className={styles.header}>
+          <div className={styles.headerLeft}>
+            <Skeleton width={140} height={11} style={{ marginBottom: 8 }} />
+            <Skeleton width={280} height={22} />
+          </div>
+        </div>
+        <div className={styles.body}>
+          <SkeletonRow count={4} avatar />
+        </div>
+      </div>
+    );
+  }
   if (error) return <div className={styles.empty}>Failed to load: {error}</div>;
   if (!msg) return <div className={styles.empty}>Message not found</div>;
 

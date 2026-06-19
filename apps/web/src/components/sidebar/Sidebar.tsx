@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/hooks/redux";
 import { setActive, createLabel, deleteLabel, fetchFolders, fetchLabels } from "@/store/slices/foldersSlice";
 import { setPrivacyCenter } from "@/store/slices/uiSlice";
+import { push as pushToast } from "@/store/slices/notificationsSlice";
 import { FolderItem } from "./FolderItem";
 import { LabelItem } from "./LabelItem";
 import { AliasesList } from "./AliasesList";
@@ -40,10 +41,15 @@ export function Sidebar() {
 
   const handleNewLabel = async () => {
     if (!newLabelName.trim()) return;
-    await dispatch(createLabel({ name: newLabelName.trim() }));
+    const result = await dispatch(createLabel({ name: newLabelName.trim() }));
     setNewLabelName("");
     setShowNewLabel(false);
     dispatch(fetchLabels());
+    if (createLabel.fulfilled.match(result)) {
+      dispatch(pushToast({ type: "success", message: `Label "${result.payload.name}" created` }));
+    } else {
+      dispatch(pushToast({ type: "error", message: "Failed to create label" }));
+    }
   };
 
   return (
@@ -160,7 +166,14 @@ export function Sidebar() {
                 key={l.id}
                 label={l}
                 count={l.unreadCount}
-                onDelete={() => dispatch(deleteLabel(l.id))}
+                onDelete={async () => {
+                  const result = await dispatch(deleteLabel(l.id));
+                  if (deleteLabel.fulfilled.match(result)) {
+                    dispatch(pushToast({ type: "success", message: `Label "${l.name}" deleted` }));
+                  } else {
+                    dispatch(pushToast({ type: "error", message: "Failed to delete label" }));
+                  }
+                }}
               />
             ))}
           </ul>

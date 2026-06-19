@@ -5,6 +5,7 @@ import { moveMessage, setMessageLabels, fetchMessageDetail, starMessage } from "
 import { decrementUnread } from "@/store/slices/foldersSlice";
 import { LabelPicker } from "@/components/message/LabelPicker";
 import { parserMeta } from "@/services/parserRegistry";
+import { push as pushToast } from "@/store/slices/notificationsSlice";
 import styles from "./MessageList.module.css";
 
 const ICON_PROPS = {
@@ -92,11 +93,24 @@ export function MessageList({ messages }: Props) {
     e.stopPropagation();
     if (action === "star") {
       dispatch(starMessage({ id: m.id, starred: !m.starred }));
+      dispatch(pushToast({
+        type: "success",
+        message: m.starred ? "Removed star" : "Starred",
+      }));
       return;
     }
-    if (action === "trash") dispatch(moveMessage({ id: m.id, folder: "trash" }));
-    if (action === "archive") dispatch(moveMessage({ id: m.id, folder: "archive" }));
-    if (action === "spam") dispatch(moveMessage({ id: m.id, folder: "junk" }));
+    if (action === "trash") {
+      dispatch(moveMessage({ id: m.id, folder: "trash" }));
+      dispatch(pushToast({ type: "success", message: "Moved to Trash" }));
+    }
+    if (action === "archive") {
+      dispatch(moveMessage({ id: m.id, folder: "archive" }));
+      dispatch(pushToast({ type: "success", message: "Archived" }));
+    }
+    if (action === "spam") {
+      dispatch(moveMessage({ id: m.id, folder: "junk" }));
+      dispatch(pushToast({ type: "success", message: "Reported as spam" }));
+    }
   };
 
   return (

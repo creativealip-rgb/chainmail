@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { markAllRead } from "@/store/slices/messagesSlice";
 import { fetchFolders } from "@/store/slices/foldersSlice";
+import { push as pushToast } from "@/store/slices/notificationsSlice";
 import styles from "./MailboxView.module.css";
 
 interface Props {
@@ -45,8 +46,8 @@ export function ActionToolbar({ activeFolder, activeLabelId, unreadCount }: Prop
     } else {
       await dispatch(markAllRead({ folder: activeFolder }));
     }
-    // Refetch folders so unread counts refresh
     dispatch(fetchFolders());
+    dispatch(pushToast({ type: "success", message: `Marked ${unreadCount} as read` }));
   };
 
   return (
