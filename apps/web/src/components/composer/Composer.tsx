@@ -4,6 +4,7 @@ import { close, update } from "@/store/slices/composerSlice";
 import { sendMessage } from "@/store/slices/messagesSlice";
 import { fetchAliases } from "@/store/slices/aliasesSlice";
 import { fetchMessages } from "@/store/slices/messagesSlice";
+import { push as pushToast } from "@/store/slices/notificationsSlice";
 import styles from "./Composer.module.css";
 
 function parseRecipients(raw: string): string[] {
@@ -113,11 +114,23 @@ export function Composer() {
         }),
       );
       if (sendMessage.fulfilled.match(result)) {
-        // Refetch sent folder so it shows up there too
+        dispatch(
+          pushToast({
+            type: "success",
+            message: `Message queued to ${to}`,
+          }),
+        );
         dispatch(fetchMessages({ folder: "sent" }));
         dispatch(close());
       } else {
-        setError((result.payload as string) ?? "send failed");
+        const errMsg = (result.payload as string) ?? "send failed";
+        setError(errMsg);
+        dispatch(
+          pushToast({
+            type: "error",
+            message: errMsg,
+          }),
+        );
       }
     } finally {
       setSending(false);
