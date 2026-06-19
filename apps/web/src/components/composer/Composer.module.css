@@ -220,3 +220,90 @@
 .sendBtn:hover:not(:disabled) { filter: brightness(1.08); }
 .sendBtn:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--color-brand-blue); }
 .sendBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 720px) {
+  .overlay {
+    align-items: flex-end;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.45);
+  }
+  .modal {
+    width: 100%;
+    max-width: none;
+    height: min(92dvh, 760px);
+    max-height: 92dvh;
+    border-radius: var(--r-2xl) var(--r-2xl) 0 0;
+    border-bottom: 0;
+  }
+  .header {
+    padding: var(--space-4);
+  }
+  .title { font-size: var(--fs-lg); }
+  .closeBtn { width: 34px; height: 34px; }
+  .field {
+    grid-template-columns: 52px minmax(0, 1fr);
+    padding: var(--space-2) var(--space-4);
+    gap: var(--space-2);
+  }
+  .label { font-size: 10px; }
+  .fromValue,
+  .input {
+    font-size: var(--fs-base);
+    min-width: 0;
+  }
+  .fromValue {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .toggleRow {
+    padding: var(--space-2) var(--space-4) var(--space-3);
+  }
+  .toggleBtn {
+    min-height: 32px;
+    padding: 0 var(--space-4);
+  }
+  .bodyField {
+    min-height: 0;
+    padding: var(--space-3) var(--space-4);
+  }
+  .textarea {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .error {
+    padding: var(--space-3) var(--space-4);
+  }
+  .footer {
+    position: sticky;
+    bottom: 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-3) var(--space-4) max(var(--space-3), env(safe-area-inset-bottom));
+  }
+  .footerHint {
+    order: 2;
+    text-align: center;
+  }
+  .footerActions {
+    order: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .cancelBtn,
+  .sendBtn {
+    height: 42px;
+    justify-content: center;
+    border-radius: var(--r-lg);
+    font-size: var(--fs-base);
+  }
+}
+
+@media (max-width: 420px) {
+  .modal { height: 94dvh; max-height: 94dvh; }
+  .field { grid-template-columns: 46px minmax(0, 1fr); padding-inline: var(--space-3); }
+  .header,
+  .bodyField,
+  .footer { padding-inline: var(--space-3); }
+  .input::placeholder { color: transparent; }
+}
