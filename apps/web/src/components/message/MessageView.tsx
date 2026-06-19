@@ -167,14 +167,16 @@ export function MessageView({ messageId }: Props) {
         <div className={styles.meta}>
           <strong>{isOutbound ? msg.aliasEmail : msg.fromName ?? msg.fromAddr}</strong>
           {!isOutbound && <span className={styles.fromAddr}>&lt;{msg.fromAddr}&gt;</span>}
-          <span>
-            to{" "}
-            {(msg.toAddrs ?? []).map((a, i) => (
-              <span key={a} className={styles.toAddr}>
-                {a}
-                {i < (msg.toAddrs?.length ?? 0) - 1 ? ", " : ""}
-              </span>
-            ))}
+          <span className={styles.metaRow}>
+            To:{" "}
+            <span className={styles.toAddrList}>
+              {(msg.toAddrs ?? []).map((a, i) => (
+                <span key={a} className={styles.toAddr}>
+                  {a}
+                  {i < (msg.toAddrs?.length ?? 0) - 1 ? "" : ""}
+                </span>
+              ))}
+            </span>
           </span>
           <span className={styles.timestamp}>
             {new Date(msg.receivedAt).toLocaleString()}
@@ -243,11 +245,39 @@ export function MessageView({ messageId }: Props) {
       )}
 
       <nav className={styles.actions} aria-label="Message actions">
-        <button className={styles.iconBtn} title="Reply">↩ Reply</button>
-        <button className={styles.iconBtn} title="Forward">↪ Forward</button>
-        <button className={styles.iconBtn} title="Move to Trash">🗑</button>
-        <button className={styles.iconBtn} title="Mark as Junk">🚩</button>
-        <button className={styles.iconBtn} title="Star">☆</button>
+        <button className={styles.iconBtn} title="Reply">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <polyline points="9 17 4 12 9 7" />
+            <path d="M20 18v-2a4 4 0 0 0-4-4H4" />
+          </svg>
+          Reply
+        </button>
+        <button className={styles.iconBtn} title="Forward">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <polyline points="15 17 20 12 15 7" />
+            <path d="M4 4v5a4 4 0 0 0 4 4h12" />
+          </svg>
+          Forward
+        </button>
+        <button className={styles.iconBtn} title="Move to Trash">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+          </svg>
+        </button>
+        <button className={styles.iconBtn} title="Mark as Junk">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+            <line x1="4" y1="22" x2="4" y2="15" />
+          </svg>
+        </button>
+        <button className={styles.iconBtn} title="Star">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+        </button>
         <LabelPicker messageId={msg.id} />
         <span className={styles.spacer} />
         <button
@@ -256,7 +286,12 @@ export function MessageView({ messageId }: Props) {
           onClick={handleExportCsv}
           disabled={exporting}
         >
-          {exporting ? "⏳ Exporting…" : "📊 Export CSV"}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          {exporting ? "Exporting…" : "Export CSV"}
         </button>
       </nav>
 
