@@ -19,6 +19,7 @@ import { eq, and } from "drizzle-orm";
 import { db } from "../db/index.js";
 import { aliases, messages, receipts, users } from "../db/schema/index.js";
 import { env } from "../lib/env.js";
+import { emitToUser } from "../lib/realtime.js";
 import { parseEmail, type EmailKind } from "parsers";
 import { encryptForRecipient } from "@ui/crypto";
 import type { ChainmailVars } from "../middleware/auth.js";
@@ -162,6 +163,18 @@ ingestRoute.post("/", async (c) => {
 
     await db.update(messages).set({ receiptId }).where(eq(messages.id, insertedMsg.id));
   }
+
+  // W5.2: realtime push — notify the recipient's open tabs so the inbox updates
+  //        without polling. Frontend prepends the message and refetches the list.
+  emitToUser(alias.userId, "message.created", {
+    messageId: insertedMsg.id,
+    aliasId: alias.id,
+    from: email.from,
+    subject: email.subject || null,
+    receivedAt: email.receivedAt.toISOString(),
+    hasReceipt: receiptId !== null,
+    parserKey: parsedReceipt?.parserKey ?? null,
+  });
 
   return c.json(
     {

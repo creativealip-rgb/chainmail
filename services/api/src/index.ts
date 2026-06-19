@@ -1,8 +1,12 @@
 /**
  * Chainmail API — Hono entry
  * Default port 3000. Bind 0.0.0.0 for Docker.
+ *
+ * W5.2: Socket.IO mounted on the same HTTP server at /engine.io.
+ *        Ingestion emits `message.created` to the recipient user's room.
  */
-import { serve } from "@hono/node-server";
+import { createServer } from "node:http";
+import { getRequestListener } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { cors } from "hono/cors";
@@ -13,6 +17,7 @@ import { ingestRoute } from "./routes/ingest.js";
 import { messagesRoute } from "./routes/messages.js";
 import { foldersRoute } from "./routes/folders.js";
 import { errorHandler } from "./middleware/error.js";
+import { attachRealtime } from "./lib/realtime.js";
 import type { ChainmailVars } from "./middleware/auth.js";
 
 const app = new Hono<{ Variables: ChainmailVars }>();
@@ -21,7 +26,10 @@ app.use("*", logger());
 app.use(
   "*",
   cors({
-    origin: ["https://chainmail.168-144-37-19.sslip.io", "http://localhost:5173"],
+    origin: [
+      "https://chainmail.168-144-37-19.sslip.io",
+      "http://localhost:5173",
+    ],
     credentials: true,
   })
 );
@@ -40,7 +48,19 @@ app.route("/api", foldersRoute);
 app.get("/", (c) => c.text("chainmail-api · see /api/health"));
 
 const port = Number(process.env.PORT ?? 3000);
+const hostname = "0.0.0.0";
 
-serve({ fetch: app.fetch, port, hostname: "0.0.0.0" }, (info) => {
-  console.log(`[chainmail-api] listening on :${info.port}`);
+// W5.2: one HTTP server, shared between Hono and Socket.IO.
+// `getRequestListener` adapts Node IncomingMessage → Web Request for Hono
+// (Hono's CORS/logger/etc. middleware call `req.headers.get(...)`).
+const httpServer = createServer();
+
+// Hono handles HTTP requests (Node IncomingMessage → Web Request → Response).
+httpServer.on("request", getRequestListener(app.fetch));
+
+// Socket.IO handles WS upgrades + /engine.io polling on the same server.
+attachRealtime(httpServer);
+
+httpServer.listen(port, hostname, () => {
+  console.log(`[chainmail-api] listening on ${hostname}:${port}`);
 });

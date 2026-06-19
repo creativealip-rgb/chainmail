@@ -1,6 +1,8 @@
 import { io, type Socket } from "socket.io-client";
 
-const WS_URL = import.meta.env.VITE_WS_URL ?? "wss://ws.chainmail.app";
+const WS_URL = import.meta.env.VITE_WS_URL ?? "https://api.chainmail.168-144-37-19.sslip.io";
+
+export type AppSocket = Socket;
 
 let socket: Socket | null = null;
 
