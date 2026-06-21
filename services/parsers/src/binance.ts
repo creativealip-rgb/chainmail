@@ -8,6 +8,8 @@ import type { Parser, EmailEnvelope, ParsedReceipt } from "./index.js";
 
 // "Your deposit of 1000 USDT has been received" / "Deposit 1000 USDT confirmed"
 const RE_DEPOSIT = /(?:Deposit|deposit)\s+(?:of\s+)?([\d.,]+)\s+(\w+)\s+(?:has been\s+)?(?:received|confirmed|successful)/i;
+// "Your 42.50 USDT deposit on BSC was confirmed"
+const RE_AMOUNT_DEPOSIT = /([\d.,]+)\s+(\w+)\s+deposit\b[\s\S]{0,120}?(?:was\s+)?(?:received|confirmed|successful)/i;
 // "Your withdrawal of 0.1 BTC has been successful" / "Withdrawal 0.1 BTC completed"
 const RE_WITHDRAWAL = /Withdrawal\s+(?:of\s+)?([\d.,]+)\s+(\w+)\s+(?:has been\s+)?(?:successful|completed|processed)/i;
 // "Buy 10 BNB at 580.50 USDT each" / "Sell 2 ETH at 3000 USDT"
@@ -28,7 +30,7 @@ export const binanceParser: Parser = (email: EmailEnvelope): ParsedReceipt | nul
   const text = email.bodyText;
   const txHash = text.match(RE_TXHASH)?.[1] ?? null;
 
-  const deposit = text.match(RE_DEPOSIT) ?? text.match(RE_AMOUNT_STATUS);
+  const deposit = text.match(RE_DEPOSIT) ?? text.match(RE_AMOUNT_DEPOSIT) ?? text.match(RE_AMOUNT_STATUS);
   if (deposit && /deposit/i.test(text)) {
     return {
       parserKey: "binance",

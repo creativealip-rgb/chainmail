@@ -10,7 +10,7 @@
 | Service | Image | Container | IP | Status |
 |---|---|---|---|---|
 | Web | `chainmail-web:auth-light-r46` | `chainmail-web-v2` | `10.0.1.88` | live |
-| API | `chainmail-api:w9-relay` | `chainmail-api` | `10.0.1.74` | live |
+| API | `chainmail-api:w10-ingest-parser` | `chainmail-api` | `10.0.1.89` | live |
 | DB | `postgres:16` | `chainmail-pg` | internal | live |
 
 Traefik dynamic files:
@@ -46,15 +46,17 @@ Traefik dynamic files:
 - Added local draft autosave in composer.
 - Added Privacy Center modal wired to sidebar/avatar triggers.
 
-### API `w9-relay`
+### API `w10-ingest-parser`
 
-- Added outbound relay worker in `services/api/src/lib/outboundRelay.ts`.
-- Worker polls queued outbound messages every 15 seconds.
-- Worker sends via Resend when configured.
-- Status transitions:
-  - success: `queued → sent`
-  - failure: `queued → failed`, with `statusDetail`
-- Worker disabled safely if `RESEND_API_KEY` missing.
+- Fixed Binance parser for amount-before-deposit wording:
+  - `Your 42.50 USDT deposit on BSC was confirmed.`
+- Added regression test for that wording.
+- Live `/api/ingest` verified with encrypted storage and parsed receipt.
+- Latest parser test suite: 29/29 passing.
+- Outbound relay worker from `w9-relay` remains live:
+  - polls queued outbound messages every 15 seconds
+  - sends via Resend when configured
+  - safely disabled if `RESEND_API_KEY` missing
 
 ## Required env for outbound delivery
 
@@ -91,7 +93,7 @@ statusDetail: resend <status>: <payload>
 ## Remaining work
 
 1. Configure outbound provider and verify actual delivery.
-2. Full `/api/ingest` live test with `INGEST_SECRET` and open browser tab for realtime update.
+2. Open browser tab and verify realtime UI update on `/api/ingest` push.
 3. MX/SMTP inbound path for real forwarded receipts.
 4. Price enrichment for ledger USD estimates.
 5. Composer/editor visual QA.

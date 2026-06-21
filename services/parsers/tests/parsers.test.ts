@@ -122,6 +122,23 @@ test("binance: deposit with TX hash extracted", () => {
   assert.equal(r.data.counterparty, "binance");
 });
 
+test("binance: amount-before-deposit wording parsed", () => {
+  const r = binanceParser({
+    from: "notify@binance.com",
+    fromName: "Binance",
+    subject: "Deposit Successful — Live Ingest QA",
+    bodyText: "Your 42.50 USDT deposit on BSC was confirmed. Tx Hash: 0xfeedface1234567890abcdef1234567890abcdef.",
+    receivedAt: new Date(),
+  });
+  assert.ok(r);
+  assert.equal(r.parserKey, "binance");
+  assert.equal(r.kind, "cex_deposit");
+  assert.equal(r.data.asset, "USDT");
+  assert.equal(r.data.amount, "42.50");
+  assert.equal(r.data.txHash, "0xfeedface1234567890abcdef1234567890abcdef");
+  assert.ok(r.confidence >= 0.9);
+});
+
 test("binance: withdrawal BTC parsed", () => {
   const fx = fixtures.find((f) => f.label === "binance-withdrawal-btc");
   const r = binanceParser({ ...fx, receivedAt: new Date() });
