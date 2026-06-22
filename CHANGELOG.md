@@ -2,7 +2,20 @@
 
 All notable changes to Chainmail are documented here.
 
-## 2026-06-22 — Auth Page Premium Redesign
+## 2026-06-22 — Auth Page Dark Glassmorphism Redesign
+
+- Dark background (#0a0a1a) with 3 animated gradient blobs (blue, violet, cyan)
+- Glass card: `rgba(255,255,255,0.05)` bg, `backdrop-filter: blur(24px)`, inset glow border
+- Top accent: blue → violet gradient glow line
+- Inputs: 48px height, 14px radius, dark translucent, blue focus glow ring
+- Button: 50px height, blue→indigo gradient, outer glow, shine sweep effect
+- Typography: white titles, muted gray labels, bright blue links
+- Error/warning: dark translucent backgrounds with colored text
+- `blobAccent` animated element for extra depth
+- `prefers-reduced-motion` support
+- All auth pages (SignIn, SignUp, RecoverySetup) use consistent dark theme
+
+## 2026-06-22 — Auth Page Premium Redesign (v1 — light glassmorphism)
 
 - Full-viewport gradient background with radial orbs + subtle grid pattern
 - Glassmorphism card: `backdrop-filter: blur(20px) saturate(1.4)`, 78% white bg

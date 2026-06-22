@@ -25,6 +25,7 @@ export default function SignInPage() {
 
   return (
     <div className={styles.authBg}>
+    <div className={styles.blobAccent} />
     <div className={styles.authPage}>
       <Logo />
       <h1 className={styles.title}>Welcome back</h1>

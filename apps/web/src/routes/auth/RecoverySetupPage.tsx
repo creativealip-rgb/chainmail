@@ -58,6 +58,7 @@ export default function RecoverySetupPage() {
 
   return (
     <div className={styles.authBg}>
+    <div className={styles.blobAccent} />
     <div className={styles.authPage}>
       <Logo />
       <h1 className={styles.title}>Save your recovery code</h1>

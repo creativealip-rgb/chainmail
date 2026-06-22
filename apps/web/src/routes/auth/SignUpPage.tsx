@@ -33,6 +33,7 @@ export default function SignUpPage() {
 
   return (
     <div className={styles.authBg}>
+    <div className={styles.blobAccent} />
     <div className={styles.authPage}>
       <Logo />
       <h1 className={styles.title}>Create your Chainmail account</h1>
