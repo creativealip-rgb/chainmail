@@ -322,6 +322,13 @@ export function MessageList({ messages }: Props) {
                 {timeAgo(m.receivedAt)}
               </time>
               {!m.readAt && <span className={styles.unread} aria-label="Unread" />}
+              <button
+                className={m.starred ? `${styles.mobileStar} ${styles.starred}` : styles.mobileStar}
+                onClick={(e) => handleAction(e, "star", m)}
+                aria-label={m.starred ? "Unstar message" : "Star message"}
+              >
+                <IconStar filled={m.starred} />
+              </button>
               <div className={styles.rowActions} onClick={(e) => e.stopPropagation()}>
                 <button
                   className={m.starred ? `${styles.actionBtn} ${styles.starred}` : styles.actionBtn}

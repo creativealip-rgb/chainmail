@@ -269,6 +269,11 @@
 .starred { color: #d97706; background: rgba(245, 158, 11, 0.12); }
 .starred:hover { background: rgba(245, 158, 11, 0.2); }
 
+/* Mobile star — hidden on desktop, shown on mobile */
+.mobileStar {
+  display: none;
+}
+
 @media (max-width: 760px) {
   .list { padding: 6px; }
   .row { grid-template-columns: 40px minmax(0, 1fr) auto; gap: var(--space-2); padding: 10px var(--space-3); border-radius: 12px; }
@@ -280,6 +285,21 @@
   .time { min-width: 38px; font-size: 11px; }
   .rowActions { display: none; }
   .labels { display: none; }
+  .mobileStar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    color: color-mix(in srgb, var(--text-primary) 40%, transparent);
+    flex-shrink: 0;
+  }
+  .mobileStar.starred {
+    color: #d97706;
+  }
 }
 
 @media (max-width: 420px) {
@@ -288,6 +308,7 @@
   .via,
   .alias { display: none; }
   .time { min-width: 34px; }
+  .mobileStar { width: 28px; height: 28px; }
 }
 
 
