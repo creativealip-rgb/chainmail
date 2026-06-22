@@ -32,6 +32,7 @@ export default function SignUpPage() {
   };
 
   return (
+    <div className={styles.authBg}>
     <div className={styles.authPage}>
       <Logo />
       <h1 className={styles.title}>Create your Chainmail account</h1>
@@ -96,6 +97,7 @@ export default function SignUpPage() {
       <p className={styles.altLink}>
         Already have an account? <Link to="/app/auth/sign-in">Sign in</Link>
       </p>
+    </div>
     </div>
   );
 }

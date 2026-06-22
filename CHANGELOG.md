@@ -2,6 +2,19 @@
 
 All notable changes to Chainmail are documented here.
 
+## 2026-06-22 — Auth Page Premium Redesign
+
+- Full-viewport gradient background with radial orbs + subtle grid pattern
+- Glassmorphism card: `backdrop-filter: blur(20px) saturate(1.4)`, 78% white bg
+- Top accent stripe: blue → indigo → cyan gradient
+- Card slide-in animation on mount (`cardSlideIn 0.5s`)
+- Floating orb animation in background (`orbFloat 20s`)
+- Inputs: 46px height, 12px radius, hover state, focus glow ring
+- Button: 48px height, gradient bg, shine sweep on hover, lift effect
+- Error messages: shake animation on display
+- All `!important` removed (was 15+ declarations)
+- `authBg` wrapper added to SignIn, SignUp, RecoverySetup pages
+
 ## 2026-06-22 — Inbox UI Overhaul
 
 ### Sidebar (477 → 300 lines)

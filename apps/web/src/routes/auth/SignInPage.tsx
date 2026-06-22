@@ -24,6 +24,7 @@ export default function SignInPage() {
   };
 
   return (
+    <div className={styles.authBg}>
     <div className={styles.authPage}>
       <Logo />
       <h1 className={styles.title}>Welcome back</h1>
@@ -70,6 +71,7 @@ export default function SignInPage() {
       <p className={styles.altLink}>
         New to Chainmail? <Link to="/app/auth/sign-up">Create an account</Link>
       </p>
+    </div>
     </div>
   );
 }

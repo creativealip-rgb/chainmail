@@ -57,6 +57,7 @@ export default function RecoverySetupPage() {
   };
 
   return (
+    <div className={styles.authBg}>
     <div className={styles.authPage}>
       <Logo />
       <h1 className={styles.title}>Save your recovery code</h1>
@@ -150,6 +151,7 @@ export default function RecoverySetupPage() {
         Signed up as <strong>{email}</strong>.{" "}
         <Link to="/app/auth/sign-in">Sign in as a different user</Link>
       </p>
+    </div>
     </div>
   );
 }
