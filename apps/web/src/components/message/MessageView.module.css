@@ -293,9 +293,36 @@
 
 .receiptMeta {
   grid-column: 1 / -1;
-  margin-top: 8px;
-  padding-top: 10px;
+  margin-top: 10px;
+  padding-top: 12px;
   border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.receiptMeta > div {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.receiptMeta dt {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  margin: 0;
+}
+
+.receiptMeta dd {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1;
 }
 
 /* Hidden legacy receipt sub-elements */
