@@ -175,7 +175,16 @@ export function MailboxView({ mailboxId, labelId }: Props) {
           <div className={styles.emptyIllustration} aria-hidden>
             {emptyIllustration}
           </div>
-          <p className={styles.emptyTitle}>Your inbox is empty</p>
+          <p className={styles.emptyTitle}>{
+            mailboxId === "drafts" ? "No drafts"
+            : mailboxId === "junk" || mailboxId === "spam" ? "No spam messages"
+            : mailboxId === "trash" ? "Trash is empty"
+            : mailboxId === "sent" ? "No sent messages"
+            : mailboxId === "archive" ? "Archive is empty"
+            : mailboxId === "starred" || mailboxId === "flagged" ? "No starred messages"
+            : mailboxId === "important" ? "No important messages"
+            : "Your inbox is empty"
+          }</p>
           <p className={styles.hint}>{emptyHint}</p>
           {inboxSteps && (
             <ol className={styles.steps}>

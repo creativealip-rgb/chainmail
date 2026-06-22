@@ -256,12 +256,12 @@
   justify-content: center;
   border-radius: 9px;
   background: transparent;
-  color: color-mix(in srgb, var(--text-secondary) 85%, var(--text-primary));
+  color: color-mix(in srgb, var(--text-primary) 55%, transparent);
   transition: background var(--d-fast) var(--ease-default), color var(--d-fast) var(--ease-default), transform var(--d-instant) var(--ease-default);
   cursor: pointer;
 }
 .actionBtn:hover {
-  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
   color: var(--text-primary);
   transform: translateY(-1px);
 }
