@@ -1,6 +1,6 @@
 # Chainmail
 
-> **Status**: MVP polish / live QA · 2026-06-20  
+> **Status**: MVP polish / live QA · 2026-06-22  
 > **Repo**: `/root/projects/chainmail`  
 > **Live web**: https://chainmail.168-144-37-19.sslip.io  
 > **Live API**: https://api.chainmail.168-144-37-19.sslip.io/api/health  
@@ -31,7 +31,7 @@ Verified live with `alip3@chainmail.test`:
 
 | Service | Image | Container | IP | Notes |
 |---|---|---|---|---|
-| Web | `chainmail-web:auth-light-r46` | `chainmail-web-v2` | `10.0.1.88` | light-mode public/auth polish; dark mode disabled |
+| Web | `chainmail:latest` | `chainmail-web-v2` | `10.0.1.88` | inbox UI overhaul: sidebar 260px, grid topbar, 0 !important, -58% CSS |
 | API | `chainmail-api:w9-relay` | `chainmail-api` | `10.0.1.74` | outbound Resend relay worker |
 
 Traefik dynamic configs:
@@ -101,7 +101,7 @@ pnpm --filter parsers test
 - [x] Parser suite: Coinbase, Binance, Etherscan, Indodax, Kraken, Tokocrypto, Uniswap, OpenSea, Phantom, MetaMask
 - [x] Realtime server attached via Socket.IO
 - [x] Profile modal + Privacy Center
-- [x] Inbox/message detail visual polish + responsive CSS breakpoints
+- [x] Inbox UI overhaul: sidebar 260px, compose 44px, grid topbar, consolidated CSS (-58%), zero !important
 - [x] Dark mode disabled/forced light until redesign is ready
 - [x] Outbound relay worker foundation via Resend
 

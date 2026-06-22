@@ -15,7 +15,7 @@
   margin: 0;
   font-size: 24px;
   line-height: 1.15;
-  font-weight: 720;
+  font-weight: 700;
   color: var(--text-primary);
   text-transform: capitalize;
   letter-spacing: -0.025em;
@@ -210,24 +210,6 @@
 
 @media (max-width: 760px) {
   .viewHeader {
-    padding: var(--space-4) var(--space-4) var(--space-3);
-    gap: var(--space-2);
-  }
-  .toolbar {
-    padding: var(--space-2) var(--space-4);
-    overflow-x: auto;
-  }
-  .toolbarBtn { white-space: nowrap; }
-}
-
-/* r38 responsive mailbox header */
-@media (max-width: 900px) {
-  .viewHeader { padding: 16px 18px 14px; }
-  .viewTitle { font-size: 22px; }
-}
-
-@media (max-width: 760px) {
-  .viewHeader {
     align-items: flex-start;
     flex-direction: column;
     padding: 14px 12px 12px;
@@ -237,7 +219,11 @@
   .viewTitle { font-size: 20px; }
   .viewSummary { font-size: 11px; }
   .receiptPill { height: 26px; padding: 0 10px; font-size: 11px; }
-  .toolbar { padding: 7px 12px; overflow-x: auto; }
+  .toolbar {
+    padding: 7px 12px;
+    overflow-x: auto;
+  }
+  .toolbarBtn { white-space: nowrap; }
 }
 
 @media (max-width: 420px) {

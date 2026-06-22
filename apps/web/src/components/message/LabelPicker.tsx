@@ -145,6 +145,7 @@ export function LabelPicker({ messageId, compact = false }: Props) {
         className={triggerClass}
         onClick={handleOpen}
         title="Labels"
+        aria-label="Labels"
         aria-haspopup="true"
         aria-expanded={open}
       >
