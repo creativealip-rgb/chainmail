@@ -1,13 +1,43 @@
 import type { ApiMessage } from "@/store/slices/messagesSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Fragment } from "react";
 import { moveMessage, setMessageLabels, fetchMessageDetail, starMessage } from "@/store/slices/messagesSlice";
 import { decrementUnread } from "@/store/slices/foldersSlice";
 import { LabelPicker } from "@/components/message/LabelPicker";
 import { parserMeta } from "@/services/parserRegistry";
 import { push as pushToast } from "@/store/slices/notificationsSlice";
 import styles from "./MessageList.module.css";
+
+/* ─── Date grouping ─── */
+function getDateGroup(iso: string): string {
+  const d = new Date(iso);
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  const diffDays = Math.floor(diffMs / 86_400_000);
+  if (d.toDateString() === now.toDateString()) return "Today";
+  const yesterday = new Date(now);
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (d.toDateString() === yesterday.toDateString()) return "Yesterday";
+  if (diffDays < 7) return "This week";
+  if (diffDays < 30) return "Earlier this month";
+  return "Older";
+}
+
+/* ─── Avatar color from sender name ─── */
+const AVATAR_COLORS: string[] = [
+  "#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b",
+  "#10b981", "#06b6d4", "#ef4444", "#6366f1",
+  "#14b8a6", "#f97316",
+];
+function senderColor(name: string): string {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = ((h << 5) - h + name.charCodeAt(i)) | 0;
+  return AVATAR_COLORS[Math.abs(h) % AVATAR_COLORS.length] ?? "#3b82f6";
+}
+function senderInitial(name: string): string {
+  return (name || "?").charAt(0).toUpperCase();
+}
 
 const ICON_PROPS = {
   width: 14,
@@ -192,9 +222,27 @@ export function MessageList({ messages }: Props) {
     }
   };
 
+  /* ─── Build date-grouped message list ─── */
+  const grouped: { label: string; messages: { msg: ApiMessage; index: number }[] }[] = [];
+  let currentGroup = "";
+  messages.forEach((m, i) => {
+    const group = getDateGroup(m.receivedAt);
+    if (group !== currentGroup) {
+      currentGroup = group;
+      grouped.push({ label: group, messages: [] });
+    }
+    const last = grouped[grouped.length - 1];
+    if (last) last.messages.push({ msg: m, index: i });
+  });
+
   return (
     <ul className={styles.list} ref={listRef}>
-      {messages.map((m, i) => {
+      {grouped.map((g) => (
+        <Fragment key={g.label}>
+          <li className={styles.dateGroup} role="separator">
+            <span className={styles.dateGroupLabel}>{g.label}</span>
+          </li>
+          {g.messages.map(({ msg: m, index: i }) => {
         const badge = parserMeta(m.parserKey);
         const msgLabels = labelsByMessage[m.id] ?? [];
         const isOutbound = m.direction === "outbound";
@@ -228,16 +276,14 @@ export function MessageList({ messages }: Props) {
                 >
                   →
                 </span>
-              ) : badge ? (
-                <span
-                  className={styles.badge}
-                  style={{ background: badge.color }}
-                  title={`Parsed by ${badge.label}`}
-                >
-                  {badge.label}
-                </span>
               ) : (
-                <span className={styles.unparsed} title="No parser matched">—</span>
+                <span
+                  className={styles.senderAvatar}
+                  style={{ background: senderColor(m.fromName ?? m.fromAddr ?? "?") }}
+                  title={m.fromName ?? m.fromAddr}
+                >
+                  {senderInitial(m.fromName ?? m.fromAddr)}
+                </span>
               )}
             </div>
             <div className={styles.middle}>
@@ -278,7 +324,7 @@ export function MessageList({ messages }: Props) {
               <div className={styles.rowActions} onClick={(e) => e.stopPropagation()}>
                 <button
                   className={m.starred ? `${styles.actionBtn} ${styles.starred}` : styles.actionBtn}
-                  title={m.starred ? "Unstar" : "Star"}
+                  title={m.starred ? "Unstar (S)" : "Star (S)"}
                   onClick={(e) => handleAction(e, "star", m)}
                   aria-label={m.starred ? "Unstar message" : "Star message"}
                   aria-pressed={m.starred}
@@ -288,7 +334,7 @@ export function MessageList({ messages }: Props) {
                 <LabelPicker messageId={m.id} compact />
                 <button
                   className={styles.actionBtn}
-                  title="Archive"
+                  title="Archive (E)"
                   onClick={(e) => handleAction(e, "archive", m)}
                   aria-label="Archive message"
                 >
@@ -304,7 +350,7 @@ export function MessageList({ messages }: Props) {
                 </button>
                 <button
                   className={styles.actionBtn}
-                  title="Trash"
+                  title="Trash (#)"
                   onClick={(e) => handleAction(e, "trash", m)}
                   aria-label="Move to trash"
                 >
@@ -314,7 +360,9 @@ export function MessageList({ messages }: Props) {
             </div>
           </li>
         );
-      })}
+          })}
+        </Fragment>
+      ))}
     </ul>
   );
 }
